@@ -108,7 +108,8 @@
             </div>
 
             <div class="history-source-note">
-              同工只需要輸入一句歌詞搜尋，就會跳出檔案供下載，<br>有些歌可能會少個幾句請見諒。<br>（要以前唱過的，而且不能有錯字喔！）。
+              同工只需要輸入一句歌詞搜尋，就會跳出檔案供下載。<br>需要以前唱過的歌，新歌沒有喔！
+              <br>基於各種原因，有些唱過的也可能沒有（對不起）。
             </div>
 
             <label class="staff-label" for="history-query">輸入一句歌詞</label>
@@ -135,7 +136,7 @@
   <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
   <script src="script.js"></script>
-  <script src="staff-song-archive.js"></script>
+  <script src="song-歌詞.js"></script>
   <script>
     document.querySelectorAll(".staff-tool-disclosure").forEach((tool) => {
       tool.removeAttribute("open");
@@ -271,18 +272,19 @@
       }
 
       const { AlignmentType, Document, Packer, Paragraph, TextRun } = window.docx;
-      const makeLyricParagraph = (line) => new Paragraph({
+      const makeLyricParagraph = (line, isTitle = false) => new Paragraph({
         children: [
           new TextRun({
             text: line || " ",
             bold: true,
             size: 32,
             font: "Roboto",
-            color: "0A1B36"
+            color: isTitle ? "030303" : "0A1B36"
           })
         ],
         alignment: AlignmentType.LEFT,
-        spacing: { line: 240, before: 0, after: 0 }
+        spacing: { line: 240, before: 0, after: 0 },
+        shading: isTitle ? { type: "pct15", color: "auto", fill: "FFFFFF" } : undefined
       });
       const makeBlankParagraph = () => makeLyricParagraph(" ");
       const children = [];
@@ -291,8 +293,8 @@
         if (blockIndex > 0) {
           children.push(makeBlankParagraph());
         }
-        block.forEach((line) => {
-          children.push(makeLyricParagraph(line));
+        block.forEach((line, lineIndex) => {
+          children.push(makeLyricParagraph(line, lineIndex === 0));
         });
       });
 
@@ -412,6 +414,59 @@
       return firstLine ? firstLine.slice(0, 18) : fallback;
     };
 
+    const archiveSourceStem = (name) => String(name || "")
+      .replace(/\.(pptx|docx)$/i, "")
+      .replace(/\s+/g, "");
+
+    const findLinkedPptSong = (wordMatch, allSongs) => {
+      if (wordMatch.sourceType === "PPT") return wordMatch;
+      const stem = archiveSourceStem(wordMatch.fileName || wordMatch.source);
+      const candidates = allSongs.filter((song) => (
+        song.sourceType === "PPT" &&
+        archiveSourceStem(song.fileName || song.source) === stem
+      ));
+
+      if (!candidates.length) return wordMatch;
+
+      const wordLineKeys = new Set(wordMatch.lines.map(normalizeLyricLine).filter(Boolean));
+      const best = candidates
+        .map((song) => ({
+          song,
+          score: song.lines.reduce((total, line) => total + (wordLineKeys.has(normalizeLyricLine(line)) ? 1 : 0), 0)
+        }))
+        .sort((a, b) => b.score - a.score)[0];
+
+      return best?.score >= 2 ? best.song : wordMatch;
+    };
+
+    const songDisplayKey = (song) => {
+      const title = normalizeLyricLine(song.title || "");
+      if (title && title !== normalizeLyricLine("未對到 Word 歌名")) {
+        return `title:${title}`;
+      }
+      return `lyrics:${normalizeLyricLine(song.text).slice(0, 120)}`;
+    };
+
+    const removeDuplicateSongMatches = (songs) => {
+      const seen = new Set();
+      return songs
+        .sort((a, b) => {
+          if (a.sourceType === b.sourceType) return 0;
+          return a.sourceType === "Word" ? -1 : 1;
+        })
+        .filter((song) => {
+          const key = songDisplayKey(song);
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+    };
+
+    const isOrphanPptSong = (song) => (
+      song.sourceType === "PPT" &&
+      normalizeLyricLine(song.title || "") === normalizeLyricLine("未對到 Word 歌名")
+    );
+
     const chunkLines = (lines, maxLines = 4) => {
       const chunks = [];
       for (let index = 0; index < lines.length; index += maxLines) {
@@ -422,7 +477,9 @@
 
     const findHistorySong = async () => {
       currentHistoryMatch = null;
-      const query = normalizeSearchText(historyQueryInput.value);
+      const rawQuery = historyQueryInput.value;
+      const query = normalizeSearchText(rawQuery);
+      const titleQuery = normalizeLyricLine(rawQuery);
 
       if (!query) {
         historyStatus.textContent = "請輸入一句歌詞";
@@ -441,33 +498,85 @@
       try {
         const allSongs = ARCHIVE_SONGS.map((song, index) => sanitizeArchiveSong(song, index));
 
-        const match = allSongs.find((song) => normalizeSearchText(song.text).includes(query));
-        if (!match) {
+        const allMatches = removeDuplicateSongMatches(
+          allSongs.filter((song) => !isOrphanPptSong(song) && normalizeSearchText(song.text).includes(query))
+        );
+        const exactTitleMatches = allMatches.filter((song) => (
+          normalizeLyricLine(song.title || "") === titleQuery
+        ));
+        const displayMatches = exactTitleMatches.length ? exactTitleMatches : allMatches;
+        const matches = displayMatches.slice(0, 8);
+
+        if (!matches.length) {
           historyStatus.textContent = `找不到符合歌曲，已搜尋 ${allSongs.length} 首`;
           historyResult.innerHTML = '<p class="staff-empty">沒有找到符合這句歌詞的歌曲，可以換一句更完整的歌詞再試一次。</p>';
           return;
         }
 
-        currentHistoryMatch = match;
-        const title = match.title || compactSongTitle(match.lines, "搜尋結果");
-        historyStatus.textContent = `找到：${title}`;
-        historyResult.innerHTML = `
+        if (displayMatches.length > 8) {
+          historyStatus.textContent = `找到 ${displayMatches.length} 筆可能結果`;
+          historyResult.innerHTML = '<p class="staff-empty">歌詞要更加詳細喔！</p>';
+          return;
+        }
+
+        currentHistoryMatch = matches[0];
+        historyStatus.textContent = matches.length === 1
+          ? `找到：${matches[0].title || compactSongTitle(matches[0].lines, "搜尋結果")}`
+          : `找到 ${matches.length} 筆可能結果`;
+        historyResult.innerHTML = matches.map((match, index) => {
+          const title = match.title || compactSongTitle(match.lines, "搜尋結果");
+          const linkedPpt = findLinkedPptSong(match, allSongs);
+          match.linkedPpt = linkedPpt;
+          const linkedPptNote = linkedPpt !== match
+            ? `<p>對應 PPT：${escapeHtml(linkedPpt.fileName || linkedPpt.source || "歷年歌詞資料庫")}</p>`
+            : "";
+          const longFileNote = match.lines.length > 30
+            ? '<p class="staff-empty">這筆歌詞很長，可能是來源檔案裡多首歌沒有分隔。</p>'
+            : "";
+          return `
           <article class="history-match-card">
             <h3>${escapeHtml(title)}</h3>
+            <p>來源：${escapeHtml(match.fileName || match.source || "歷年歌詞資料庫")}</p>
+            ${linkedPptNote}
             <div class="staff-actions">
-              <button class="btn btn-primary" type="button" id="download-history-ppt">下載這首 PPT</button>
-              <button class="btn btn-primary" type="button" id="download-history-docx">下載這首 Word</button>
+              <button class="btn btn-primary" type="button" data-history-ppt="${index}">下載這首 PPT</button>
+              <button class="btn btn-primary" type="button" data-history-docx="${index}">下載這首 Word</button>
             </div>
+            ${longFileNote}
             <pre>${escapeHtml(match.lines.join("\n"))}</pre>
           </article>
         `;
+        }).join("");
 
-        document.getElementById("download-history-ppt").addEventListener("click", async () => {
-          await createPptxFromBlocks(currentHistoryMatch.slideBlocks, title);
+        historyResult.querySelectorAll("[data-history-ppt]").forEach((button) => {
+          button.addEventListener("click", async () => {
+            const match = matches[Number(button.dataset.historyPpt)];
+            const pptMatch = match.linkedPpt || match;
+            const title = match.title || compactSongTitle(match.lines, "搜尋結果");
+            currentHistoryMatch = match;
+            await createPptxFromBlocks(pptMatch.slideBlocks, title);
+            historyStatus.textContent = "已產生這首歌的 PPT";
+          });
+        });
+
+        historyResult.querySelectorAll("[data-history-docx]").forEach((button) => {
+          button.addEventListener("click", async () => {
+            const match = matches[Number(button.dataset.historyDocx)];
+            const title = match.title || compactSongTitle(match.lines, "搜尋結果");
+            currentHistoryMatch = match;
+            const blob = await buildDocxBlobFromSongs([match.lines], title);
+            downloadBlob(blob, `${safeName(title)}.docx`);
+            historyStatus.textContent = "已產生這首歌的 Word";
+          });
+        });
+
+        document.getElementById("download-history-ppt")?.addEventListener("click", async () => {
+          await createPptxFromBlocks(currentHistoryMatch.slideBlocks, currentHistoryMatch.title || compactSongTitle(currentHistoryMatch.lines, "搜尋結果"));
           historyStatus.textContent = "已產生這首歌的 PPT";
         });
 
-        document.getElementById("download-history-docx").addEventListener("click", async () => {
+        document.getElementById("download-history-docx")?.addEventListener("click", async () => {
+          const title = currentHistoryMatch.title || compactSongTitle(currentHistoryMatch.lines, "搜尋結果");
           const blob = await buildDocxBlobFromSongs([currentHistoryMatch.lines], title);
           downloadBlob(blob, `${safeName(title)}.docx`);
           historyStatus.textContent = "已產生這首歌的 Word";

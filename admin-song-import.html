@@ -90,14 +90,14 @@
 <body>
   <main>
     <h1>管理員歌詞匯入工具</h1>
-    <p>這個頁面只給管理員在自己的電腦使用，不需要放到官網。它會讀取你選的檔案，最後下載新版 <strong>staff-song-archive.js</strong>。</p>
+    <p>這個頁面只給管理員在自己的電腦使用，不需要放到官網。它會讀取你選的檔案，最後下載新版 <strong>song-歌詞.js</strong>。</p>
 
     <section class="panel">
       <h2>使用方式</h2>
       <ol class="steps">
-        <li><strong>先選舊資料庫</strong>：選官網目前使用的 <code>staff-song-archive.js</code>。</li>
+        <li><strong>先選舊資料庫</strong>：選官網目前使用的 <code>song-歌詞.js</code>。</li>
         <li><strong>再選新歌詞檔</strong>：選下週新增的 Word / PPT 歌詞檔，可以一次多選。</li>
-        <li><strong>按產生新版資料庫</strong>，下載新的 <code>staff-song-archive.js</code>。</li>
+        <li><strong>按產生新版資料庫</strong>，下載新的 <code>song-歌詞.js</code>。</li>
         <li><strong>上傳覆蓋官網舊檔</strong>：只需要覆蓋這一個資料庫檔。</li>
       </ol>
       <p class="tiny">檔案只在你的瀏覽器本機讀取，不會傳到網路上。</p>
@@ -106,7 +106,7 @@
     <section class="panel">
       <h2>產生資料庫</h2>
 
-      <label for="old-archive">舊的 staff-song-archive.js</label>
+      <label for="old-archive">舊的 song-歌詞.js</label>
       <input id="old-archive" type="file" accept=".js">
 
       <label for="new-files">新的 Word / PPT 歌詞檔</label>
@@ -196,12 +196,121 @@
       ].some((item) => text.includes(item));
     };
 
+    const isGreyTitleParagraph = (paragraph, text) => {
+      if (!text) return false;
+      return Array.from(paragraph.getElementsByTagNameNS("*", "shd")).some((node) => {
+        const value = node.getAttribute("w:val") || node.getAttribute("val") || "";
+        const fill = (node.getAttribute("w:fill") || node.getAttribute("fill") || "").toUpperCase();
+        return /^pct\d+$/i.test(value) || ["BFBFBF", "C0C0C0", "D0D0D0", "D9D9D9", "E7E6E6", "EDEDED", "F2F2F2"].includes(fill);
+      });
+    };
+
+    const buildDocxSongsFromParagraphs = (paragraphs, fileName) => {
+      const hasGreyTitles = paragraphs.some((paragraph) => paragraph.isTitle);
+
+      if (!hasGreyTitles) {
+        return splitSegmentsByBlank(paragraphs, (paragraph) => paragraph.text).map((segment, index) => {
+          const lines = segment.map((paragraph) => paragraph.text.trim()).filter(Boolean);
+          return {
+            title: (lines[0] || "未命名歌曲").slice(0, 24),
+            source: fileName,
+            sourceType: "Word",
+            songIndex: index + 1,
+            lines,
+            slideBlocks: chunkLines(lines)
+          };
+        }).filter((song) => !isProbablyNotSong(song.lines));
+      }
+
+      const songs = [];
+      let current = null;
+      paragraphs.forEach((paragraph) => {
+        if (paragraph.hasPageBreak && current?.lines.length) {
+          current.lines.push("");
+        }
+
+        if (paragraph.isTitle) {
+          if (current?.lines.some(Boolean)) songs.push(current);
+          current = {
+            title: paragraph.text.slice(0, 24) || "未命名歌曲",
+            source: fileName,
+            sourceType: "Word",
+            songIndex: songs.length + 1,
+            lines: [paragraph.text]
+          };
+          return;
+        }
+
+        if (!current || !paragraph.text) return;
+        current.lines.push(paragraph.text);
+      });
+
+      if (current?.lines.some(Boolean)) songs.push(current);
+
+      return songs.map((song, index) => {
+        const lines = song.lines.map((line) => line.trim()).filter(Boolean);
+        return {
+          ...song,
+          songIndex: index + 1,
+          lines,
+          slideBlocks: chunkLines(lines)
+        };
+      }).filter((song) => !isProbablyNotSong(song.lines));
+    };
+
+    const sourceGroupKey = (fileName) => String(fileName || "")
+      .replace(/\.(pptx|docx)$/i, "")
+      .replace(/\s+/g, "")
+      .replace(/修正/g, "")
+      .replace(/[-_－]\d+$/g, "");
+
+    const lineMatchScore = (aLines, bLines) => {
+      const aText = normalize((aLines || []).join(""));
+      const bText = normalize((bLines || []).join(""));
+      if (!aText || !bText) return 0;
+      const aScore = (aLines || []).reduce((total, line) => {
+        const key = normalize(line);
+        return total + (key.length >= 3 && bText.includes(key) ? 1 : 0);
+      }, 0);
+      const bScore = (bLines || []).reduce((total, line) => {
+        const key = normalize(line);
+        return total + (key.length >= 3 && aText.includes(key) ? 1 : 0);
+      }, 0);
+      return Math.max(aScore, bScore);
+    };
+
+    const useWordTitlesForMatchingPpts = (songs) => {
+      const wordSongs = songs.filter((song) => song.sourceType === "Word");
+      return songs.map((song) => {
+        if (song.sourceType !== "PPT") return song;
+        const groupKey = sourceGroupKey(song.source);
+        const best = wordSongs
+          .filter((wordSong) => sourceGroupKey(wordSong.source) === groupKey)
+          .map((wordSong) => ({
+            wordSong,
+            score: lineMatchScore(song.lines, wordSong.lines)
+          }))
+          .sort((a, b) => b.score - a.score)[0];
+
+        if (!best || best.score < 2) {
+          return {
+            ...song,
+            title: "未對到 Word 歌名"
+          };
+        }
+        return {
+          ...song,
+          title: best.wordSong.title
+        };
+      });
+    };
+
     const loadOldArchive = async () => {
       const file = oldArchiveInput.files[0];
       if (!file) return [];
       const text = await file.text();
       const match = text.match(/window\.ARCHIVE_SONGS\s*=\s*(\[[\s\S]*\])\s*;?/);
-      if (!match) throw new Error("舊資料庫格式不正確，請選 staff-song-archive.js。");
+      if (!match) throw new Error("舊資料庫格式不正確，請選 song-歌詞.js。");
       return JSON.parse(match[1]);
     };
 
@@ -247,27 +356,21 @@
       if (!xmlFile) return [];
       const parser = new DOMParser();
       const doc = parser.parseFromString(await xmlFile.async("text"), "application/xml");
-      const paragraphs = Array.from(doc.getElementsByTagNameNS("*", "p")).flatMap((paragraph) => {
+      const paragraphs = Array.from(doc.getElementsByTagNameNS("*", "p")).map((paragraph) => {
         const text = Array.from(paragraph.getElementsByTagNameNS("*", "t"))
           .map((node) => node.textContent)
           .join("")
           .trim();
         const hasPageBreak = Array.from(paragraph.getElementsByTagNameNS("*", "br"))
           .some((br) => br.getAttribute("w:type") === "page" || br.getAttribute("type") === "page");
-        return hasPageBreak ? [text, ""] : [text];
+        return {
+          text,
+          hasPageBreak,
+          isTitle: isGreyTitleParagraph(paragraph, text)
+        };
       });
 
-      return splitSegmentsByBlank(paragraphs, (line) => line).map((segment, index) => {
-        const lines = segment.map((line) => line.trim()).filter(Boolean);
-        return {
-          title: (lines[0] || "未命名歌曲").slice(0, 24),
-          source: file.name,
-          sourceType: "Word",
-          songIndex: index + 1,
-          lines,
-          slideBlocks: chunkLines(lines)
-        };
-      }).filter((song) => !isProbablyNotSong(song.lines));
+      return buildDocxSongsFromParagraphs(paragraphs, file.name);
     };
 
     const buildArchive = async () => {
@@ -297,7 +400,7 @@
 
       const seen = new Set();
       const merged = [];
-      [...oldSongs, ...newSongs].forEach((song) => {
+      useWordTitlesForMatchingPpts([...oldSongs, ...newSongs]).forEach((song) => {
         const key = normalize((song.lines || []).join("\n"));
         if (!key || seen.has(key)) return;
         seen.add(key);
@@ -305,7 +408,7 @@
       });
 
       const output = "window.ARCHIVE_SONGS = " + JSON.stringify(merged) + ";\n";
-      downloadText(output, "staff-song-archive.js");
+      downloadText(output, "song-歌詞.js");
       statusBox.textContent = `完成：原本 ${oldSongs.length} 首，新增讀到 ${newSongs.length} 首，合併後 ${merged.length} 首。`;
     };
 
