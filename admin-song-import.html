@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理員歌詞匯入工具</title>
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      background:#08090b;
+      color:#f6f1e9;
+      font-family:"Microsoft JhengHei", sans-serif;
+      line-height:1.75;
+    }
+    main{
+      width:min(980px, 92vw);
+      margin:0 auto;
+      padding:56px 0 72px;
+    }
+    .panel{
+      border:1px solid rgba(255,140,26,0.28);
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+      box-shadow:0 24px 58px rgba(0,0,0,0.34);
+      padding:30px;
+      margin-top:22px;
+    }
+    h1,h2{color:#ff8c1a;line-height:1.2;margin:0 0 14px}
+    h1{font-size:2.3rem}
+    h2{font-size:1.35rem}
+    p{color:#ddd2c4;margin:0 0 14px}
+    label{
+      display:block;
+      color:#ff8c1a;
+      font-weight:800;
+      margin:22px 0 8px;
+    }
+    input[type="file"]{
+      width:100%;
+      min-height:50px;
+      padding:12px;
+      border:1px solid rgba(255,140,26,0.3);
+      background:#0b0c10;
+      color:#f6f1e9;
+      font:inherit;
+    }
+    input::file-selector-button{
+      margin-right:14px;
+      border:1px solid rgba(255,140,26,0.5);
+      background:#ff6a00;
+      color:#1a0d03;
+      font-weight:800;
+      padding:8px 12px;
+      cursor:pointer;
+    }
+    button{
+      margin-top:22px;
+      min-height:52px;
+      padding:12px 22px;
+      border:2px solid #ff6a00;
+      background:#ff6a00;
+      color:#1a0d03;
+      font:inherit;
+      font-weight:900;
+      cursor:pointer;
+    }
+    button.secondary{
+      margin-left:10px;
+      background:transparent;
+      color:#ff8c1a;
+    }
+    .status{
+      margin-top:18px;
+      padding:14px 16px;
+      border:1px solid rgba(255,140,26,0.24);
+      background:rgba(255,255,255,0.03);
+      color:#ddd2c4;
+    }
+    .steps{
+      display:grid;
+      gap:10px;
+      padding-left:22px;
+      color:#ddd2c4;
+    }
+    .steps strong{color:#ff8c1a}
+    .tiny{font-size:0.92rem;color:#a89d8f}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>管理員歌詞匯入工具</h1>
+    <p>這個頁面只給管理員在自己的電腦使用，不需要放到官網。它會讀取你選的檔案，最後下載新版 <strong>staff-song-archive.js</strong>。</p>
+
+    <section class="panel">
+      <h2>使用方式</h2>
+      <ol class="steps">
+        <li><strong>先選舊資料庫</strong>：選官網目前使用的 <code>staff-song-archive.js</code>。</li>
+        <li><strong>再選新歌詞檔</strong>：選下週新增的 Word / PPT 歌詞檔，可以一次多選。</li>
+        <li><strong>按產生新版資料庫</strong>，下載新的 <code>staff-song-archive.js</code>。</li>
+        <li><strong>上傳覆蓋官網舊檔</strong>：只需要覆蓋這一個資料庫檔。</li>
+      </ol>
+      <p class="tiny">檔案只在你的瀏覽器本機讀取，不會傳到網路上。</p>
+    </section>
+
+    <section class="panel">
+      <h2>產生資料庫</h2>
+
+      <label for="old-archive">舊的 staff-song-archive.js</label>
+      <input id="old-archive" type="file" accept=".js">
+
+      <label for="new-files">新的 Word / PPT 歌詞檔</label>
+      <input id="new-files" type="file" accept=".pptx,.docx" multiple>
+
+      <button type="button" id="build">產生新版資料庫</button>
+      <button type="button" class="secondary" id="clear">清除</button>
+
+      <div class="status" id="status">尚未開始。</div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script>
+    const oldArchiveInput = document.getElementById("old-archive");
+    const newFilesInput = document.getElementById("new-files");
+    const statusBox = document.getElementById("status");
+
+    const cleanText = (value) => String(value || "").replace(/\s+/g, " ").trim();
+    const normalize = (value) => String(value || "")
+      .replace(/\s+/g, "")
+      .replace(/[，。！？、,.!?;；:：()\[\]（）【】「」『』《》〈〉\-—_＋+&＆]/g, "")
+      .toLowerCase();
+
+    const downloadText = (text, filename) => {
+      const blob = new Blob([text], { type: "text/javascript;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    };
+
+    const splitSegmentsByBlank = (items, getText) => {
+      const segments = [];
+      let current = [];
+      items.forEach((item) => {
+        if (getText(item)) {
+          current.push(item);
+        } else if (current.length) {
+          segments.push(current);
+          current = [];
+        }
+      });
+      if (current.length) segments.push(current);
+      return segments;
+    };
+
+    const chunkLines = (lines, size = 4) => {
+      const chunks = [];
+      for (let index = 0; index < lines.length; index += size) {
+        chunks.push(lines.slice(index, index + size));
+      }
+      return chunks;
+    };
+
+    const collapsePptMergedLine = (lines) => {
+      const safeLines = Array.isArray(lines)
+        ? lines.map((line) => cleanText(line)).filter(Boolean)
+        : [];
+      if (safeLines.length <= 1) return safeLines;
+
+      const [firstLine, ...restLines] = safeLines;
+      if (restLines.length < 2) return safeLines;
+
+      if (normalize(firstLine) === normalize(restLines.join(""))) {
+        return restLines;
+      }
+
+      return safeLines;
+    };
+
+    const isProbablyNotSong = (lines) => {
+      const text = lines.join("");
+      if (text.length < 6) return true;
+      return [
+        "聚會前請將手機",
+        "轉為靜音",
+        "預備心",
+        "奉獻經文",
+        "歡迎新朋友",
+        "報告事項",
+        "主日崇拜程序"
+      ].some((item) => text.includes(item));
+    };
+
+    const loadOldArchive = async () => {
+      const file = oldArchiveInput.files[0];
+      if (!file) return [];
+      const text = await file.text();
+      const match = text.match(/window\.ARCHIVE_SONGS\s*=\s*(\[[\s\S]*\])\s*;?/);
+      if (!match) throw new Error("舊資料庫格式不正確，請選 staff-song-archive.js。");
+      return JSON.parse(match[1]);
+    };
+
+    const readPptxSongs = async (file) => {
+      const zip = await JSZip.loadAsync(file);
+      const parser = new DOMParser();
+      const slidePaths = Object.keys(zip.files)
+        .filter((path) => /^ppt\/slides\/slide\d+\.xml$/.test(path))
+        .sort((a, b) => Number(a.match(/slide(\d+)\.xml/)[1]) - Number(b.match(/slide(\d+)\.xml/)[1]));
+      const slides = [];
+
+      for (const path of slidePaths) {
+        const xml = await zip.file(path).async("text");
+        const doc = parser.parseFromString(xml, "application/xml");
+        const paragraphs = Array.from(doc.getElementsByTagNameNS("*", "p"))
+          .map((paragraph) => Array.from(paragraph.getElementsByTagNameNS("*", "t"))
+            .map((node) => node.textContent)
+            .join("")
+            .trim())
+          .filter(Boolean);
+        slides.push(paragraphs);
+      }
+
+      return splitSegmentsByBlank(slides, (slideLines) => slideLines.join("")).map((segment, index) => {
+        const slideBlocks = segment
+          .map((slideLines) => collapsePptMergedLine(slideLines))
+          .filter((slideLines) => slideLines.length);
+        const lines = slideBlocks.flat();
+        return {
+          title: (lines[0] || "未命名歌曲").slice(0, 24),
+          source: file.name,
+          sourceType: "PPT",
+          songIndex: index + 1,
+          lines,
+          slideBlocks
+        };
+      }).filter((song) => !isProbablyNotSong(song.lines));
+    };
+
+    const readDocxSongs = async (file) => {
+      const zip = await JSZip.loadAsync(file);
+      const xmlFile = zip.file("word/document.xml");
+      if (!xmlFile) return [];
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(await xmlFile.async("text"), "application/xml");
+      const paragraphs = Array.from(doc.getElementsByTagNameNS("*", "p")).flatMap((paragraph) => {
+        const text = Array.from(paragraph.getElementsByTagNameNS("*", "t"))
+          .map((node) => node.textContent)
+          .join("")
+          .trim();
+        const hasPageBreak = Array.from(paragraph.getElementsByTagNameNS("*", "br"))
+          .some((br) => br.getAttribute("w:type") === "page" || br.getAttribute("type") === "page");
+        return hasPageBreak ? [text, ""] : [text];
+      });
+
+      return splitSegmentsByBlank(paragraphs, (line) => line).map((segment, index) => {
+        const lines = segment.map((line) => line.trim()).filter(Boolean);
+        return {
+          title: (lines[0] || "未命名歌曲").slice(0, 24),
+          source: file.name,
+          sourceType: "Word",
+          songIndex: index + 1,
+          lines,
+          slideBlocks: chunkLines(lines)
+        };
+      }).filter((song) => !isProbablyNotSong(song.lines));
+    };
+
+    const buildArchive = async () => {
+      if (!window.JSZip) {
+        statusBox.textContent = "讀檔工具尚未載入，請確認網路後重整。";
+        return;
+      }
+
+      const files = Array.from(newFilesInput.files || []);
+      if (!files.length) {
+        statusBox.textContent = "請先選新的 Word / PPT 歌詞檔。";
+        return;
+      }
+
+      statusBox.textContent = "正在讀取檔案...";
+      const oldSongs = await loadOldArchive();
+      const newSongs = [];
+
+      for (const file of files) {
+        if (file.name.startsWith("~$")) continue;
+        if (file.name.toLowerCase().endsWith(".pptx")) {
+          newSongs.push(...await readPptxSongs(file));
+        } else if (file.name.toLowerCase().endsWith(".docx")) {
+          newSongs.push(...await readDocxSongs(file));
+        }
+      }
+
+      const seen = new Set();
+      const merged = [];
+      [...oldSongs, ...newSongs].forEach((song) => {
+        const key = normalize((song.lines || []).join("\n"));
+        if (!key || seen.has(key)) return;
+        seen.add(key);
+        merged.push(song);
+      });
+
+      const output = "window.ARCHIVE_SONGS = " + JSON.stringify(merged) + ";\n";
+      downloadText(output, "staff-song-archive.js");
+      statusBox.textContent = `完成：原本 ${oldSongs.length} 首，新增讀到 ${newSongs.length} 首，合併後 ${merged.length} 首。`;
+    };
+
+    document.getElementById("build").addEventListener("click", () => {
+      buildArchive().catch((error) => {
+        statusBox.textContent = error.message || "產生失敗，請確認檔案格式。";
+      });
+    });
+
+    document.getElementById("clear").addEventListener("click", () => {
+      oldArchiveInput.value = "";
+      newFilesInput.value = "";
+      statusBox.textContent = "尚未開始。";
+    });
+  </script>
+</body>
+</html>

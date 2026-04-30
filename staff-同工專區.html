@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>同工專區 - 腓立比火焰基督教會</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="site-page page-staff">
+
+  <header>
+    <div class="nav">
+      <a href="index.html" class="logo">
+        <img src="https://i.ibb.co/mCb10DQC/church-logo.jpg" alt="腓立比火焰基督教會 Logo" />
+        <span class="logo-text">腓立比火焰基督教會</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="展開或收合網站選單">
+        <span class="menu-toggle-arrow" aria-hidden="true"></span>
+      </button>
+      <nav class="menu" id="site-menu">
+        <a href="about-教會介紹.html">教會介紹</a>
+        <a href="team-團隊介紹.html">團隊介紹</a>
+        <a href="ministries-教會事工.html">教會事工</a>
+        <a href="live-直播與課程.html">直播/課程</a>
+        <a href="events-近期事工.html">近期事工</a>
+        <a href="offering-奉獻支持.html">奉獻支持</a>
+        <a href="contact-聯絡我們.html">聯絡我們</a>
+        <a href="staff-同工專區.html">同工專區</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-grid page-hero-grid-single">
+        <div class="page-hero-copy">
+          <div class="page-kicker">STAFF WORKSPACE</div>
+          <h1 class="page-title">同工專區</h1>
+          <p class="page-lead">
+            這邊的程式可以幫助同工們更快速的完成事工。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="staff-tool page-section page-section-top">
+    <div class="container">
+      <details class="group-schedule-block group-schedule-disclosure staff-tool-disclosure">
+        <summary class="group-schedule-heading">歌詞產生器</summary>
+        <div class="group-schedule-board staff-tool-board">
+          <div class="staff-tool-grid">
+            <section class="staff-workbench" aria-labelledby="lyrics-tool-title">
+              <div class="staff-tool-head">
+                <div>
+                  <div class="page-kicker">LYRICS EXPORT</div>
+                  <h2 class="section-title" id="lyrics-tool-title">歌詞產生器</h2>
+                </div>
+                <div class="staff-status" id="staff-status" role="status">尚未產生檔案</div>
+              </div>
+
+              <label class="staff-label" for="song-title">檔名 / 歌名</label>
+              <input class="staff-input" id="song-title" type="text" value="主日歌詞" autocomplete="off">
+
+              <label class="staff-label" for="lyrics-input">歌詞內容</label>
+              <textarea class="staff-textarea" id="lyrics-input" spellcheck="false" placeholder="把歌詞貼在這裡，但歌詞排版要自行調整一下，
+因為做網頁的人不夠厲害。"></textarea>
+
+              <div class="staff-options" aria-label="分頁設定">
+                <label class="staff-option">
+                  <span>每張投影片最多行數</span>
+                  <input id="lines-per-slide" type="number" min="2" max="8" value="4">
+                </label>
+                <label class="staff-option staff-checkbox">
+                  <input id="use-blank-blocks" type="checkbox" checked>
+                  <span>空白行分段</span>
+                </label>
+              </div>
+
+              <div class="staff-actions">
+                <button class="btn btn-primary" type="button" id="download-ppt">下載 PPT</button>
+                <button class="btn btn-primary" type="button" id="download-docx">下載 Word</button>
+                <button class="btn btn-outline" type="button" id="clear-lyrics">清空</button>
+              </div>
+            </section>
+
+            <aside class="staff-preview" aria-labelledby="preview-title">
+              <div class="page-kicker">PREVIEW</div>
+              <h2 class="section-title" id="preview-title">分頁預覽</h2>
+              <div class="staff-preview-board" id="preview-board">
+                <p class="staff-empty">貼上歌詞後會在這裡顯示 PPT 分頁。</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </details>
+
+      <details class="group-schedule-block group-schedule-disclosure staff-tool-disclosure">
+        <summary class="group-schedule-heading">歷年歌詞搜尋</summary>
+        <div class="group-schedule-board staff-tool-board">
+          <div class="staff-history-tool">
+            <div class="staff-tool-head">
+              <div>
+                <div class="page-kicker">SONG ARCHIVE</div>
+                <h2 class="section-title">歷年歌詞搜尋</h2>
+              </div>
+              <div class="staff-status" id="history-status" role="status">尚未搜尋</div>
+            </div>
+
+            <div class="history-source-note">
+              同工只需要輸入一句歌詞搜尋，就會跳出檔案供下載，<br>有些歌可能會少個幾句請見諒。<br>（要以前唱過的，而且不能有錯字喔！）。
+            </div>
+
+            <label class="staff-label" for="history-query">輸入一句歌詞</label>
+            <input class="staff-input" id="history-query" type="text" placeholder="例如：以感謝的心">
+
+            <div class="staff-actions">
+              <button class="btn btn-primary" type="button" id="search-history">搜尋歌曲</button>
+              <button class="btn btn-outline" type="button" id="clear-history">清除結果</button>
+            </div>
+
+            <div class="history-result" id="history-result">
+              <p class="staff-empty">搜尋後只會那一首歌。</p>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 腓立比火焰基督教會 Philippi Flame Church All Rights Reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script src="script.js"></script>
+  <script src="staff-song-archive.js"></script>
+  <script>
+    document.querySelectorAll(".staff-tool-disclosure").forEach((tool) => {
+      tool.removeAttribute("open");
+    });
+
+    const lyricsInput = document.getElementById("lyrics-input");
+    const titleInput = document.getElementById("song-title");
+    const linesPerSlideInput = document.getElementById("lines-per-slide");
+    const useBlankBlocksInput = document.getElementById("use-blank-blocks");
+    const previewBoard = document.getElementById("preview-board");
+    const statusBox = document.getElementById("staff-status");
+
+    const safeName = (name) => (name || "主日歌詞").trim().replace(/[\\/:*?"<>|]/g, "-");
+
+    const getLines = () => lyricsInput.value
+      .replace(/\r\n/g, "\n")
+      .split("\n")
+      .map((line) => line.trim());
+
+    const getSongBlocks = () => lyricsInput.value
+      .replace(/\r\n/g, "\n")
+      .trim()
+      .split(/\n\s*\n/g)
+      .map((block) => block.split("\n").map((line) => line.trim()).filter(Boolean))
+      .filter((block) => block.length);
+
+    const getSlideBlocks = () => {
+      const maxLines = Math.max(2, Math.min(8, Number(linesPerSlideInput.value) || 4));
+      const raw = lyricsInput.value.replace(/\r\n/g, "\n").trim();
+      if (!raw) return [];
+
+      if (useBlankBlocksInput.checked) {
+        return raw
+          .split(/\n\s*\n/g)
+          .map((block) => block.split("\n").map((line) => line.trim()).filter(Boolean))
+          .filter((block) => block.length)
+          .flatMap((block) => {
+            const chunks = [];
+            for (let index = 0; index < block.length; index += maxLines) {
+              chunks.push(block.slice(index, index + maxLines));
+            }
+            return chunks;
+          });
+      }
+
+      const compactLines = getLines().filter(Boolean);
+      const chunks = [];
+      for (let index = 0; index < compactLines.length; index += maxLines) {
+        chunks.push(compactLines.slice(index, index + maxLines));
+      }
+      return chunks;
+    };
+
+    const updatePreview = () => {
+      const blocks = getSlideBlocks();
+      if (!blocks.length) {
+        previewBoard.innerHTML = '<p class="staff-empty">貼上歌詞後會在這裡顯示 PPT 分頁。</p>';
+        statusBox.textContent = "尚未產生檔案";
+        return;
+      }
+
+      previewBoard.innerHTML = blocks.map((block, index) => `
+        <article class="staff-slide-preview">
+          <span>投影片 ${index + 1}</span>
+          <p>${block.map((line) => line.replace(/[&<>"']/g, (char) => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+          }[char]))).join("<br>")}</p>
+        </article>
+      `).join("");
+      statusBox.textContent = `目前 ${blocks.length} 張投影片`;
+    };
+
+    const fontSizeForBlock = (block) => {
+      return 80;
+    };
+
+    const downloadBlob = (blob, filename) => {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    };
+
+    const createPptxFromBlocks = async (blocks, title) => {
+      const PptxCtor = window.PptxGenJS || window.pptxgen;
+      if (!PptxCtor) {
+        throw new Error("PPT 產生器尚未載入，請確認網路後重整");
+      }
+
+      const pptx = new PptxCtor();
+      pptx.layout = "LAYOUT_WIDE";
+      pptx.author = "Philippi Flame Church";
+      pptx.subject = "Sunday worship lyrics";
+      pptx.title = title || "主日歌詞";
+      pptx.company = "腓立比火焰基督教會";
+      pptx.theme = {
+        headFontFace: "Microsoft JhengHei",
+        bodyFontFace: "Microsoft JhengHei",
+        lang: "zh-TW"
+      };
+
+      blocks.forEach((block) => {
+        const slide = pptx.addSlide();
+        slide.background = { color: "139213" };
+        slide.addText(block.join("\n"), {
+          x: 0,
+          y: 0.6,
+          w: 13.24,
+          h: 6.63,
+          margin: 0.08,
+          fontFace: "Microsoft JhengHei",
+          fontSize: fontSizeForBlock(block),
+          bold: true,
+          color: "FFFFFF",
+          align: "center",
+          valign: "top",
+          fit: "shrink",
+          paraSpaceAfterPt: 0,
+          breakLine: false
+        });
+      });
+
+      await pptx.writeFile({ fileName: `${safeName(title)}.pptx` });
+    };
+
+    const buildDocxBlobFromSongs = async (songBlocks, title) => {
+      if (!window.docx) {
+        throw new Error("Word 產生器尚未載入，請確認網路後重整");
+      }
+
+      const { AlignmentType, Document, Packer, Paragraph, TextRun } = window.docx;
+      const makeLyricParagraph = (line) => new Paragraph({
+        children: [
+          new TextRun({
+            text: line || " ",
+            bold: true,
+            size: 32,
+            font: "Roboto",
+            color: "0A1B36"
+          })
+        ],
+        alignment: AlignmentType.LEFT,
+        spacing: { line: 240, before: 0, after: 0 }
+      });
+      const makeBlankParagraph = () => makeLyricParagraph(" ");
+      const children = [];
+
+      songBlocks.forEach((block, blockIndex) => {
+        if (blockIndex > 0) {
+          children.push(makeBlankParagraph());
+        }
+        block.forEach((line) => {
+          children.push(makeLyricParagraph(line));
+        });
+      });
+
+      const doc = new Document({
+        creator: "腓立比火焰基督教會",
+        title: title || "主日歌詞",
+        description: "Sunday worship lyrics",
+        sections: [{
+          properties: {
+            page: {
+              size: { width: 11906, height: 16838 },
+              margin: { top: 1440, right: 1800, bottom: 1440, left: 1800 }
+            }
+          },
+          children
+        }]
+      });
+
+      return Packer.toBlob(doc);
+    };
+
+    document.getElementById("download-ppt").addEventListener("click", async () => {
+      const blocks = getSlideBlocks();
+      if (!blocks.length) {
+        statusBox.textContent = "請先貼上歌詞";
+        return;
+      }
+
+      await createPptxFromBlocks(blocks, titleInput.value || "主日歌詞");
+      statusBox.textContent = `已產生 PPT：${blocks.length} 張`;
+    });
+
+    document.getElementById("download-docx").addEventListener("click", async () => {
+      const songBlocks = getSongBlocks();
+      if (!songBlocks.length) {
+        statusBox.textContent = "請先貼上歌詞";
+        return;
+      }
+
+      const blob = await buildDocxBlobFromSongs(songBlocks, titleInput.value || "主日歌詞");
+      downloadBlob(blob, `${safeName(titleInput.value)}.docx`);
+      statusBox.textContent = "已產生 Word";
+    });
+
+    document.getElementById("clear-lyrics").addEventListener("click", () => {
+      lyricsInput.value = "";
+      updatePreview();
+      lyricsInput.focus();
+    });
+
+    [lyricsInput, linesPerSlideInput, useBlankBlocksInput].forEach((element) => {
+      element.addEventListener("input", updatePreview);
+      element.addEventListener("change", updatePreview);
+    });
+
+    const historyQueryInput = document.getElementById("history-query");
+    const historyStatus = document.getElementById("history-status");
+    const historyResult = document.getElementById("history-result");
+    let currentHistoryMatch = null;
+
+    const ARCHIVE_SONGS = window.ARCHIVE_SONGS || [];
+
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[char]));
+
+    const normalizeSearchText = (value) => String(value)
+      .replace(/\s+/g, "")
+      .replace(/[，。！？、,.!?;；:：]/g, "")
+      .toLowerCase();
+
+    const normalizeLyricLine = (value) => String(value)
+      .replace(/\s+/g, "")
+      .replace(/[，。！？、,.!?;；:：()\[\]（）【】「」『』《》〈〉\-—_＋+&＆]/g, "")
+      .toLowerCase();
+
+    const collapsePptMergedLine = (lines) => {
+      const safeLines = Array.isArray(lines)
+        ? lines.map((line) => String(line || "").trim()).filter(Boolean)
+        : [];
+      if (safeLines.length <= 1) return safeLines;
+
+      const [firstLine, ...restLines] = safeLines;
+      const mergedTail = normalizeLyricLine(restLines.join(""));
+      if (restLines.length >= 2 && normalizeLyricLine(firstLine) === mergedTail) {
+        return restLines;
+      }
+
+      return safeLines;
+    };
+
+    const sanitizeArchiveSong = (song, index) => {
+      const rawSlideBlocks = Array.isArray(song.slideBlocks) && song.slideBlocks.length
+        ? song.slideBlocks
+        : chunkLines(Array.isArray(song.lines) ? song.lines.filter(Boolean) : [], 4);
+      const slideBlocks = rawSlideBlocks
+        .map((block) => collapsePptMergedLine(block))
+        .filter((block) => block.length);
+      const lines = slideBlocks.flat();
+
+      return {
+        ...song,
+        songIndex: index + 1,
+        fileName: song.source || "歷年歌詞資料庫",
+        lines,
+        slideBlocks,
+        text: lines.join("\n")
+      };
+    };
+
+    const compactSongTitle = (lines, fallback) => {
+      const firstLine = lines.find(Boolean);
+      return firstLine ? firstLine.slice(0, 18) : fallback;
+    };
+
+    const chunkLines = (lines, maxLines = 4) => {
+      const chunks = [];
+      for (let index = 0; index < lines.length; index += maxLines) {
+        chunks.push(lines.slice(index, index + maxLines));
+      }
+      return chunks;
+    };
+
+    const findHistorySong = async () => {
+      currentHistoryMatch = null;
+      const query = normalizeSearchText(historyQueryInput.value);
+
+      if (!query) {
+        historyStatus.textContent = "請輸入一句歌詞";
+        return;
+      }
+
+      if (!ARCHIVE_SONGS.length) {
+        historyStatus.textContent = "資料庫尚未建立";
+        historyResult.innerHTML = '<p class="staff-empty">請先把歷年歌詞檔案交給管理端建檔；建好後，同工就能直接輸入一句歌詞搜尋。</p>';
+        return;
+      }
+
+      historyStatus.textContent = "搜尋中...";
+      historyResult.innerHTML = '<p class="staff-empty">正在比對歷年歌詞資料庫...</p>';
+
+      try {
+        const allSongs = ARCHIVE_SONGS.map((song, index) => sanitizeArchiveSong(song, index));
+
+        const match = allSongs.find((song) => normalizeSearchText(song.text).includes(query));
+        if (!match) {
+          historyStatus.textContent = `找不到符合歌曲，已搜尋 ${allSongs.length} 首`;
+          historyResult.innerHTML = '<p class="staff-empty">沒有找到符合這句歌詞的歌曲，可以換一句更完整的歌詞再試一次。</p>';
+          return;
+        }
+
+        currentHistoryMatch = match;
+        const title = match.title || compactSongTitle(match.lines, "搜尋結果");
+        historyStatus.textContent = `找到：${title}`;
+        historyResult.innerHTML = `
+          <article class="history-match-card">
+            <h3>${escapeHtml(title)}</h3>
+            <div class="staff-actions">
+              <button class="btn btn-primary" type="button" id="download-history-ppt">下載這首 PPT</button>
+              <button class="btn btn-primary" type="button" id="download-history-docx">下載這首 Word</button>
+            </div>
+            <pre>${escapeHtml(match.lines.join("\n"))}</pre>
+          </article>
+        `;
+
+        document.getElementById("download-history-ppt").addEventListener("click", async () => {
+          await createPptxFromBlocks(currentHistoryMatch.slideBlocks, title);
+          historyStatus.textContent = "已產生這首歌的 PPT";
+        });
+
+        document.getElementById("download-history-docx").addEventListener("click", async () => {
+          const blob = await buildDocxBlobFromSongs([currentHistoryMatch.lines], title);
+          downloadBlob(blob, `${safeName(title)}.docx`);
+          historyStatus.textContent = "已產生這首歌的 Word";
+        });
+      } catch (error) {
+        historyStatus.textContent = "讀取失敗";
+        historyResult.innerHTML = `<p class="staff-empty">${escapeHtml(error.message || "檔案讀取失敗，請確認檔案格式。")}</p>`;
+      }
+    };
+
+    document.getElementById("search-history").addEventListener("click", findHistorySong);
+    historyQueryInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        findHistorySong();
+      }
+    });
+    document.getElementById("clear-history").addEventListener("click", () => {
+      currentHistoryMatch = null;
+      historyQueryInput.value = "";
+      historyResult.innerHTML = '<p class="staff-empty">搜尋後會只顯示命中的那一首歌，不會輸出整份檔案。</p>';
+      historyStatus.textContent = "尚未搜尋";
+    });
+
+    updatePreview();
+  </script>
+</body>
+</html>
