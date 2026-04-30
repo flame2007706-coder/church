@@ -96,6 +96,38 @@
       </details>
 
       <details class="group-schedule-block group-schedule-disclosure staff-tool-disclosure">
+        <summary class="group-schedule-heading">經文產生器</summary>
+        <div class="group-schedule-board staff-tool-board">
+          <div class="staff-history-tool">
+            <div class="staff-tool-head">
+              <div>
+                <div class="page-kicker">BIBLE EXPORT</div>
+                <h2 class="section-title">經文產生器</h2>
+              </div>
+              <div class="staff-status" id="bible-status" role="status">尚未產生經文</div>
+            </div>
+
+            <div class="history-source-note">
+              可輸入章節，例如：約翰福音3:16、約3章16節、羅馬書8:28-30。也可以直接貼上經文文字產生 PPT。
+            </div>
+
+            <label class="staff-label" for="bible-query">輸入章節或經文</label>
+            <textarea class="staff-textarea" id="bible-query" spellcheck="false" placeholder="例如：約翰福音3:16"></textarea>
+
+            <div class="staff-actions">
+              <button class="btn btn-primary" type="button" id="search-bible">產生經文</button>
+              <button class="btn btn-primary" type="button" id="download-bible-ppt">下載經文 PPT</button>
+              <button class="btn btn-outline" type="button" id="clear-bible">清除</button>
+            </div>
+
+            <div class="history-result" id="bible-result">
+              <p class="staff-empty">輸入章節後會在這裡顯示經文。</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="group-schedule-block group-schedule-disclosure staff-tool-disclosure">
         <summary class="group-schedule-heading">歷年歌詞搜尋</summary>
         <div class="group-schedule-board staff-tool-board">
           <div class="staff-history-tool">
@@ -137,6 +169,7 @@
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
   <script src="script.js"></script>
   <script src="song-歌詞.js"></script>
+  <script src="bible-cuv.js"></script>
   <script>
     document.querySelectorAll(".staff-tool-disclosure").forEach((tool) => {
       tool.removeAttribute("open");
@@ -374,6 +407,255 @@
       .replace(/\s+/g, "")
       .replace(/[，。！？、,.!?;；:：()\[\]（）【】「」『』《》〈〉\-—_＋+&＆]/g, "")
       .toLowerCase();
+
+    const bibleQueryInput = document.getElementById("bible-query");
+    const bibleStatus = document.getElementById("bible-status");
+    const bibleResult = document.getElementById("bible-result");
+    let currentBiblePassage = null;
+
+    const normalizeBibleBookKey = (value) => String(value)
+      .replace(/\s+/g, "")
+      .replace(/[，。！？、,.!?;；()（）【】「」『』《》〈〉]/g, "")
+      .toLowerCase();
+
+    const normalizeBibleReferenceText = (value) => String(value)
+      .replace(/\s+/g, "")
+      .replace(/[，。！？、,.!?;；()（）【】「」『』《》〈〉]/g, "")
+      .replace(/聖經/g, "")
+      .toLowerCase();
+
+    const BIBLE_BOOK_ALIASES = {
+      GEN: ["創世紀", "創世記", "創", "創世"],
+      EXO: ["出埃及記", "出", "出埃及"],
+      LEV: ["利未記", "利", "利未"],
+      NUM: ["民數記", "民", "民數"],
+      DEU: ["申命記", "申", "申命"],
+      JOS: ["約書亞記", "書", "約書亞"],
+      JDG: ["士師記", "士", "士師"],
+      RUT: ["路得記", "得", "路得"],
+      "1SA": ["撒母耳記上", "撒上", "撒母耳上"],
+      "2SA": ["撒母耳記下", "撒下", "撒母耳下"],
+      "1KI": ["列王紀上", "王上", "列王上"],
+      "2KI": ["列王紀下", "王下", "列王下"],
+      "1CH": ["歷代志上", "代上", "歷上"],
+      "2CH": ["歷代志下", "代下", "歷下"],
+      EZR: ["以斯拉記", "拉", "以斯拉"],
+      NEH: ["尼希米記", "尼", "尼希米"],
+      EST: ["以斯帖記", "斯", "以斯帖"],
+      JOB: ["約伯記", "伯", "約伯"],
+      PSA: ["詩篇", "詩"],
+      PRO: ["箴言", "箴"],
+      ECC: ["傳道書", "傳"],
+      SNG: ["雅歌", "歌"],
+      ISA: ["以賽亞書", "賽", "以賽亞"],
+      JER: ["耶利米書", "耶", "耶利米"],
+      LAM: ["耶利米哀歌", "哀"],
+      EZK: ["以西結書", "結", "以西結"],
+      DAN: ["但以理書", "但", "但以理"],
+      HOS: ["何西阿書", "何", "何西阿"],
+      JOL: ["約珥書", "珥", "約珥"],
+      AMO: ["阿摩司書", "摩", "阿摩司"],
+      OBA: ["俄巴底亞書", "俄", "俄巴底亞"],
+      JON: ["約拿書", "拿", "約拿"],
+      MIC: ["彌迦書", "彌", "彌迦"],
+      NAM: ["那鴻書", "鴻", "那鴻"],
+      HAB: ["哈巴谷書", "哈", "哈巴谷"],
+      ZEP: ["西番雅書", "番", "西番雅"],
+      HAG: ["哈該書", "該", "哈該"],
+      ZEC: ["撒迦利亞書", "亞", "撒迦利亞"],
+      MAL: ["瑪拉基書", "瑪", "瑪拉基"],
+      MAT: ["馬太福音", "太", "馬太"],
+      MRK: ["馬可福音", "可", "馬可"],
+      LUK: ["路加福音", "路", "路加"],
+      JHN: ["約翰福音", "約", "約福", "約翰"],
+      ACT: ["使徒行傳", "徒", "使徒"],
+      ROM: ["羅馬書", "羅", "羅馬"],
+      "1CO": ["哥林多前書", "林前", "哥前"],
+      "2CO": ["哥林多後書", "林後", "哥後"],
+      GAL: ["加拉太書", "加", "加拉太"],
+      EPH: ["以弗所書", "弗", "以弗所"],
+      PHP: ["腓立比書", "腓", "腓立比"],
+      COL: ["歌羅西書", "西", "歌羅西"],
+      "1TH": ["帖撒羅尼迦前書", "帖前"],
+      "2TH": ["帖撒羅尼迦後書", "帖後"],
+      "1TI": ["提摩太前書", "提前"],
+      "2TI": ["提摩太後書", "提後"],
+      TIT: ["提多書", "多", "提多"],
+      PHM: ["腓利門書", "門", "腓利門"],
+      HEB: ["希伯來書", "來", "希伯來"],
+      JAS: ["雅各書", "雅", "雅各"],
+      "1PE": ["彼得前書", "彼前"],
+      "2PE": ["彼得後書", "彼後"],
+      "1JN": ["約翰一書", "約一", "約壹"],
+      "2JN": ["約翰二書", "約二", "約貳"],
+      "3JN": ["約翰三書", "約三", "約參"],
+      JUD: ["猶大書", "猶", "猶大"],
+      REV: ["啟示錄", "啟"]
+    };
+
+    const getBibleBooks = () => (window.BIBLE_CUV?.books || []);
+
+    const buildBibleLookup = () => {
+      return getBibleBooks().flatMap((book) => {
+        const aliases = new Set([book.name, ...(BIBLE_BOOK_ALIASES[book.id] || [])]);
+        return Array.from(aliases).map((alias) => ({
+          key: normalizeBibleBookKey(alias),
+          book
+        }));
+      }).filter((item) => item.key).sort((a, b) => b.key.length - a.key.length);
+    };
+
+    const parseBibleReference = (input) => {
+      const compact = normalizeBibleReferenceText(input);
+      const matchBook = buildBibleLookup().find((item) => compact.startsWith(item.key));
+      if (!matchBook) return null;
+      const rest = compact.slice(matchBook.key.length);
+      const rangeMatch = rest.match(/^(\d+)(?:章|:|：)?(?:(\d+)(?:節)?(?:[-~－到至](\d+)(?:節)?)?)?$/);
+      if (!rangeMatch) return null;
+      return {
+        book: matchBook.book,
+        chapter: Number(rangeMatch[1]),
+        startVerse: rangeMatch[2] ? Number(rangeMatch[2]) : null,
+        endVerse: rangeMatch[3] ? Number(rangeMatch[3]) : null
+      };
+    };
+
+    const getBiblePassage = (reference) => {
+      const chapter = reference.book.chapters?.[reference.chapter];
+      if (!chapter) throw new Error("找不到這一章，請確認章節有沒有打錯。");
+      const startVerse = reference.startVerse || 1;
+      const endVerse = reference.endVerse || reference.startVerse || chapter.length - 1;
+      const verses = [];
+      for (let verse = startVerse; verse <= endVerse; verse += 1) {
+        if (!chapter[verse]) throw new Error("找不到這一節，請確認節數有沒有打錯。");
+        verses.push({
+          ref: `${reference.book.name}${reference.chapter}:${verse}`,
+          text: chapter[verse]
+        });
+      }
+      return {
+        title: reference.startVerse
+          ? `${reference.book.name}${reference.chapter}:${startVerse}${endVerse > startVerse ? `-${endVerse}` : ""}`
+          : `${reference.book.name}${reference.chapter}`,
+        verses
+      };
+    };
+
+    const passageFromPlainText = (text) => {
+      const lines = text.replace(/\r\n/g, "\n").split("\n").map((line) => line.trim()).filter(Boolean);
+      if (!lines.length) throw new Error("請先輸入章節或經文。");
+      return {
+        title: lines[0].length <= 20 ? lines[0] : "經文",
+        verses: lines.map((line, index) => ({
+          ref: lines.length === 1 ? "經文" : `經文 ${index + 1}`,
+          text: line
+        }))
+      };
+    };
+
+    const renderBiblePassage = (passage) => {
+      currentBiblePassage = passage;
+      bibleStatus.textContent = `已產生 ${passage.verses.length} 節經文`;
+      bibleResult.innerHTML = `
+        <article class="history-match-card">
+          <h3>${escapeHtml(passage.title)}</h3>
+          <div class="staff-actions">
+            <button class="btn btn-primary" type="button" id="download-bible-ppt-inline">下載經文 PPT</button>
+          </div>
+          <pre>${escapeHtml(passage.verses.map((verse) => `${verse.ref} ${verse.text}`).join("\n"))}</pre>
+        </article>
+      `;
+      document.getElementById("download-bible-ppt-inline").addEventListener("click", downloadBiblePpt);
+    };
+
+    const buildBiblePassageFromInput = () => {
+      const raw = bibleQueryInput.value.trim();
+      if (!raw) throw new Error("請先輸入章節或經文。");
+      const reference = parseBibleReference(raw);
+      return reference ? getBiblePassage(reference) : passageFromPlainText(raw);
+    };
+
+    const createBiblePptx = async (passage) => {
+      const PptxCtor = window.PptxGenJS || window.pptxgen;
+      if (!PptxCtor) throw new Error("PPT 產生器尚未載入，請確認網路後重整");
+      const pptx = new PptxCtor();
+      pptx.layout = "LAYOUT_WIDE";
+      pptx.author = "Philippi Flame Church";
+      pptx.title = passage.title;
+      pptx.company = "腓立比火焰基督教會";
+      pptx.theme = {
+        headFontFace: "Microsoft JhengHei",
+        bodyFontFace: "Microsoft JhengHei",
+        lang: "zh-TW"
+      };
+      passage.verses.forEach((verse) => {
+        const slide = pptx.addSlide();
+        slide.background = { color: "139213" };
+        slide.addText(verse.text, {
+          x: 0.7,
+          y: 0.78,
+          w: 12.0,
+          h: 5.35,
+          margin: 0.05,
+          fontFace: "Microsoft JhengHei",
+          fontSize: verse.text.length > 90 ? 42 : 54,
+          bold: true,
+          color: "FFFFFF",
+          align: "center",
+          valign: "mid",
+          fit: "shrink",
+          breakLine: false
+        });
+        slide.addText(verse.ref, {
+          x: 0.7,
+          y: 6.25,
+          w: 12.0,
+          h: 0.45,
+          fontFace: "Microsoft JhengHei",
+          fontSize: 20,
+          bold: true,
+          color: "FFFFFF",
+          align: "right"
+        });
+      });
+      await pptx.writeFile({ fileName: `${safeName(passage.title)}.pptx` });
+    };
+
+    const downloadBiblePpt = async () => {
+      const passage = currentBiblePassage || buildBiblePassageFromInput();
+      await createBiblePptx(passage);
+      bibleStatus.textContent = `已產生經文 PPT：${passage.verses.length} 張`;
+    };
+
+    document.getElementById("search-bible").addEventListener("click", () => {
+      try {
+        renderBiblePassage(buildBiblePassageFromInput());
+      } catch (error) {
+        currentBiblePassage = null;
+        bibleStatus.textContent = "查詢失敗";
+        bibleResult.innerHTML = `<p class="staff-empty">${escapeHtml(error.message || "找不到經文，請換一種寫法試試。")}</p>`;
+      }
+    });
+
+    document.getElementById("download-bible-ppt").addEventListener("click", () => {
+      Promise.resolve()
+        .then(() => {
+          if (!currentBiblePassage) renderBiblePassage(buildBiblePassageFromInput());
+          return downloadBiblePpt();
+        })
+        .catch((error) => {
+          bibleStatus.textContent = "產生失敗";
+          bibleResult.innerHTML = `<p class="staff-empty">${escapeHtml(error.message || "PPT 產生失敗，請確認輸入內容。")}</p>`;
+        });
+    });
+
+    document.getElementById("clear-bible").addEventListener("click", () => {
+      currentBiblePassage = null;
+      bibleQueryInput.value = "";
+      bibleStatus.textContent = "尚未產生經文";
+      bibleResult.innerHTML = '<p class="staff-empty">輸入章節後會在這裡顯示經文。</p>';
+      bibleQueryInput.focus();
+    });
 
     const collapsePptMergedLine = (lines) => {
       const safeLines = Array.isArray(lines)
