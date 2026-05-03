@@ -4403,3 +4403,1135 @@ body.site-page .event-card:nth-child(3){
     transition-duration:0.01ms !important;
   }
 }
+
+/* Industrial orange visual layer */
+body.site-page{
+  background:
+    linear-gradient(135deg, rgba(255,128,24,0.12) 0 9%, transparent 9% 100%),
+    linear-gradient(315deg, transparent 0 78%, rgba(255,128,24,0.1) 78% 88%, transparent 88% 100%),
+    repeating-linear-gradient(90deg, rgba(86,54,31,0.055) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(0deg, rgba(86,54,31,0.04) 0 1px, transparent 1px 64px),
+    linear-gradient(180deg, #fffaf5 0%, #f5e7d7 100%);
+}
+
+body.site-page::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(135deg, rgba(255,118,18,0.1) 0 2px, transparent 2px 22px),
+    radial-gradient(circle at 12% 14%, rgba(255,142,42,0.13), transparent 28%),
+    radial-gradient(circle at 86% 18%, rgba(76,48,28,0.08), transparent 26%);
+  mask-image:linear-gradient(180deg, rgba(0,0,0,0.85), rgba(0,0,0,0.18));
+}
+
+body.site-page header{
+  border-bottom:1px solid rgba(78,49,28,0.16);
+  box-shadow:0 14px 34px rgba(78,49,28,0.1);
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.96), rgba(255,244,230,0.94)),
+    repeating-linear-gradient(90deg, rgba(255,128,24,0.1) 0 1px, transparent 1px 42px);
+}
+
+body.site-page .logo-mark,
+body.site-page .logo img{
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.72),
+    0 0 0 1px rgba(72,45,26,0.14),
+    0 14px 24px rgba(255,118,18,0.24);
+}
+
+body.site-page .menu a,
+body.site-page .btn{
+  clip-path:polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+
+body.site-page .menu a{
+  border:1px solid rgba(72,45,26,0.14);
+  background:linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,239,220,0.72));
+}
+
+body.site-page .menu a.active,
+body.site-page .menu a.is-current,
+body.site-page .menu a:hover{
+  border-color:rgba(255,118,18,0.52);
+  box-shadow:0 10px 24px rgba(255,118,18,0.16);
+}
+
+body.site-page .menu a.active,
+body.site-page .menu a.is-current,
+body.site-page .menu a:active{
+  background:linear-gradient(180deg, #ff9f46, #ff7f1f);
+  border-color:rgba(255,126,28,0.82);
+  color:#1a0d03;
+}
+
+body.site-page .page-hero,
+body.site-page .hero{
+  overflow:hidden;
+  border-bottom:1px solid rgba(78,49,28,0.14);
+  background:
+    linear-gradient(120deg, rgba(255,128,24,0.9) 0 30%, rgba(255,165,64,0.72) 30% 44%, rgba(255,249,242,0.96) 44% 100%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.2) 0 1px, transparent 1px 44px);
+}
+
+body.site-page .page-hero::after,
+body.site-page .hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg, transparent 0 66%, rgba(255,255,255,0.32) 66% 67%, transparent 67% 100%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.14) 0 2px, transparent 2px 18px);
+  opacity:0.75;
+}
+
+body.site-page .page-hero-copy,
+body.site-page .hero-panel{
+  position:relative;
+  z-index:1;
+  border:1px solid rgba(78,49,28,0.18);
+  border-left:7px solid rgba(255,118,18,0.92);
+  border-radius:0;
+  background:
+    linear-gradient(135deg, rgba(255,132,26,0.16) 0 20px, transparent 20px),
+    linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,244,232,0.74));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.74),
+    0 24px 58px rgba(78,49,28,0.14);
+  clip-path:polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+}
+
+body.site-page .page-section{
+  position:relative;
+}
+
+body.site-page .page-section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(255,118,18,0.08), transparent 28%, transparent 72%, rgba(255,118,18,0.06)),
+    repeating-linear-gradient(90deg, transparent 0 28px, rgba(72,45,26,0.035) 28px 29px);
+  opacity:0.8;
+}
+
+body.site-page .page-section > .container{
+  position:relative;
+}
+
+body.site-page .content-card,
+body.site-page .feature-card,
+body.site-page .page-link-card,
+body.site-page .team-card,
+body.site-page .ministry-card,
+body.site-page .event-card,
+body.site-page .offering-card,
+body.site-page .belief-card,
+body.site-page .staff-tool-disclosure,
+body.site-page .staff-history-tool,
+body.site-page .history-match-card,
+body.site-page .bible-generator-card,
+body.site-page .staff-output-card{
+  border:1px solid rgba(72,45,26,0.16);
+  border-left:5px solid rgba(255,118,18,0.76);
+  border-radius:0;
+  background:
+    linear-gradient(135deg, rgba(255,132,26,0.14) 0 18px, transparent 18px),
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,245,232,0.98));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.74),
+    0 18px 42px rgba(78,49,28,0.1);
+  clip-path:polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+}
+
+body.site-page .group-schedule-heading,
+body.site-page .section-title{
+  letter-spacing:0;
+}
+
+body.site-page .group-schedule-heading{
+  border:1px solid rgba(72,45,26,0.16);
+  border-left:6px solid #ff7612;
+  border-radius:0;
+  background:
+    linear-gradient(90deg, #ff7612, #ffa341 42%, #fff1df 42%, #fffaf4 100%);
+  color:#2d1d12;
+  box-shadow:0 12px 26px rgba(255,118,18,0.16);
+  clip-path:polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+}
+
+body.site-page .section-title::before,
+body.site-page .group-schedule-heading::before{
+  content:"";
+  display:inline-block;
+  width:10px;
+  height:10px;
+  margin-right:10px;
+  border:2px solid #ff7612;
+  transform:rotate(45deg);
+  vertical-align:middle;
+  background:#fff7ec;
+  box-shadow:0 0 0 4px rgba(255,118,18,0.12);
+}
+
+body.site-page .btn-primary,
+body.site-page .btn-outline,
+body.site-page .download-button,
+body.site-page .staff-action-button{
+  border-radius:0;
+  border:1px solid rgba(72,45,26,0.18);
+  box-shadow:
+    inset 0 -3px 0 rgba(72,45,26,0.14),
+    0 12px 24px rgba(255,118,18,0.16);
+}
+
+body.site-page .btn-primary,
+body.site-page .download-button,
+body.site-page .staff-action-button{
+  background:linear-gradient(180deg, #ff9a38, #ff7612);
+}
+
+body.site-page .staff-input,
+body.site-page .staff-textarea,
+body.site-page .bible-generator-input,
+body.site-page input[type="search"],
+body.site-page input[type="text"],
+body.site-page textarea{
+  border-radius:0;
+  border:1px solid rgba(72,45,26,0.18);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,247,237,0.96)),
+    repeating-linear-gradient(90deg, transparent 0 18px, rgba(255,118,18,0.05) 18px 19px);
+  box-shadow:inset 0 2px 0 rgba(78,49,28,0.04);
+}
+
+body.site-page .history-match-card h3,
+body.site-page .event-card h3,
+body.site-page .ministry-card h3,
+body.site-page .feature-card h3{
+  color:#e76500;
+}
+
+body.site-page footer{
+  border-top:1px solid rgba(78,49,28,0.18);
+  background:
+    linear-gradient(180deg, #2c211a, #1d1713),
+    repeating-linear-gradient(135deg, rgba(255,118,18,0.18) 0 2px, transparent 2px 18px);
+}
+
+@media (max-width: 760px){
+  body.site-page{
+    background:
+      linear-gradient(135deg, rgba(255,128,24,0.12) 0 13%, transparent 13% 100%),
+      repeating-linear-gradient(90deg, rgba(86,54,31,0.052) 0 1px, transparent 1px 42px),
+      repeating-linear-gradient(0deg, rgba(86,54,31,0.04) 0 1px, transparent 1px 42px),
+      linear-gradient(180deg, #fffaf5 0%, #f5e7d7 100%);
+  }
+
+  body.site-page .page-hero-copy,
+  body.site-page .hero-panel{
+    clip-path:polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+  }
+}
+
+/* Softer church-friendly orange frame style */
+body.site-page{
+  background:
+    repeating-linear-gradient(135deg, rgba(255,140,26,0.065) 0 2px, transparent 2px 34px),
+    repeating-linear-gradient(90deg, rgba(98,62,34,0.045) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(0deg, rgba(98,62,34,0.035) 0 1px, transparent 1px 64px),
+    linear-gradient(180deg, #fffaf4 0%, #f7ecdf 100%);
+}
+
+body.site-page::before{
+  display:none;
+}
+
+body.site-page .page-section::before{
+  background:
+    repeating-linear-gradient(135deg, rgba(255,140,26,0.04) 0 2px, transparent 2px 34px),
+    linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0));
+  opacity:1;
+}
+
+body.site-page .group-schedule-heading{
+  justify-content:center;
+  min-height:72px;
+  padding:18px 24px;
+  border:1px solid rgba(255,140,26,0.28);
+  border-left:8px solid rgba(255,140,26,0.74);
+  border-radius:0;
+  background:
+    linear-gradient(90deg, rgba(255,140,26,0.13) 0 12px, transparent 12px),
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,248,238,0.94));
+  color:#2d1d12;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.74),
+    0 12px 26px rgba(95,59,31,0.08);
+  clip-path:none;
+}
+
+body.site-page .group-schedule-heading:hover{
+  border-color:rgba(255,140,26,0.42);
+  background:
+    linear-gradient(90deg, rgba(255,140,26,0.18) 0 12px, transparent 12px),
+    linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,244,230,0.98));
+}
+
+body.site-page .section-title::before,
+body.site-page .group-schedule-heading::before{
+  display:none;
+}
+
+body.site-page .group-schedule-heading::after{
+  width:13px;
+  height:13px;
+  margin-left:2px;
+  border-right:3px solid currentColor;
+  border-bottom:3px solid currentColor;
+}
+
+body.site-page .content-card,
+body.site-page .feature-card,
+body.site-page .page-link-card,
+body.site-page .team-card,
+body.site-page .ministry-card,
+body.site-page .event-card,
+body.site-page .offering-card,
+body.site-page .belief-card,
+body.site-page .staff-tool-disclosure,
+body.site-page .staff-history-tool,
+body.site-page .history-match-card,
+body.site-page .bible-generator-card,
+body.site-page .staff-output-card{
+  border:1px solid rgba(76,48,27,0.13);
+  border-left:1px solid rgba(76,48,27,0.13);
+  border-radius:0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,251,245,0.9)),
+    linear-gradient(90deg, rgba(255,140,26,0.06), rgba(255,140,26,0));
+  box-shadow:
+    -8px 10px 0 rgba(255,140,26,0.18),
+    0 18px 42px rgba(95,59,31,0.08);
+  clip-path:none;
+}
+
+body.site-page .feature-card::before,
+body.site-page .page-link-card::before,
+body.site-page .team-card::before,
+body.site-page .service-step::before,
+body.site-page .page-banner::before,
+body.site-page .ministry-card::before{
+  top:14px;
+  left:14px;
+  width:76px;
+  height:76px;
+  border-top:4px solid rgba(255,140,26,0.72);
+  border-left:4px solid rgba(255,140,26,0.72);
+  border-radius:0;
+}
+
+body.site-page .feature-card::after,
+body.site-page .page-link-card::after,
+body.site-page .team-card::after,
+body.site-page .service-step::after{
+  content:"";
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:76px;
+  height:76px;
+  border-top:4px solid rgba(255,140,26,0.62);
+  border-right:4px solid rgba(255,140,26,0.62);
+  pointer-events:none;
+}
+
+body.site-page .btn,
+body.site-page .menu a{
+  clip-path:none;
+}
+
+body.site-page .btn-primary,
+body.site-page .btn-outline,
+body.site-page .download-button,
+body.site-page .staff-action-button{
+  border-radius:999px;
+  box-shadow:0 10px 20px rgba(255,140,26,0.14);
+}
+
+@media (max-width: 760px){
+  body.site-page{
+    background:
+      repeating-linear-gradient(135deg, rgba(255,140,26,0.055) 0 2px, transparent 2px 28px),
+      repeating-linear-gradient(90deg, rgba(98,62,34,0.04) 0 1px, transparent 1px 42px),
+      repeating-linear-gradient(0deg, rgba(98,62,34,0.03) 0 1px, transparent 1px 42px),
+      linear-gradient(180deg, #fffaf4 0%, #f7ecdf 100%);
+  }
+
+  body.site-page .group-schedule-heading{
+    min-height:64px;
+    padding:16px 18px;
+  }
+}
+
+@media (max-width: 760px){
+  body.page-home .hero{
+    background:
+      repeating-linear-gradient(135deg, rgba(255,140,26,0.045) 0 2px, transparent 2px 30px),
+      linear-gradient(180deg, #fffaf4 0%, #f8ecde 100%);
+  }
+
+  body.page-home .hero::before{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.46), rgba(255,247,237,0.78)),
+      repeating-linear-gradient(90deg, rgba(92,58,31,0.04) 0 1px, transparent 1px 48px),
+      repeating-linear-gradient(0deg, rgba(92,58,31,0.03) 0 1px, transparent 1px 48px);
+  }
+
+  body.page-home .hero::after{
+    background:linear-gradient(180deg, rgba(255,249,241,0), rgba(247,236,223,0.9));
+  }
+
+  body.page-home .hero-scene{
+    background:
+      linear-gradient(180deg, rgba(255,250,244,0.72), rgba(255,242,226,0.86)),
+      url("https://i.ibb.co/Xrkg57bt/1234.png") center center / cover no-repeat;
+    opacity:0.32;
+  }
+
+  body.page-home .hero-scene::before{
+    background:linear-gradient(180deg, rgba(255,250,244,0.42), rgba(255,248,238,0.74));
+  }
+
+  body.page-home .hero-panel{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,248,239,0.9)),
+      linear-gradient(90deg, rgba(255,140,26,0.045) 0 1px, transparent 1px 100%);
+  }
+}
+
+@media (max-width: 760px){
+  body.site-page:not(.page-home) section.page-hero{
+    padding:92px 14px 24px;
+  }
+
+  body.site-page:not(.page-home) .page-hero-copy{
+    padding:18px 16px 20px;
+  }
+}
+
+/* Restore custom ministry photo cards */
+body.site-page .ministry-card.ministry-card-featured{
+  min-height:260px;
+  border:3px solid rgba(255,140,26,0.92);
+  background:
+    linear-gradient(0deg, rgba(255,249,241,0.86), rgba(255,249,241,0.86)),
+    linear-gradient(90deg, rgba(255,140,26,0.52) 0 4px, transparent 4px calc(100% - 4px), rgba(255,140,26,0.52) calc(100% - 4px) 100%),
+    linear-gradient(0deg, rgba(255,140,26,0.44) 0 4px, transparent 4px calc(100% - 4px), rgba(255,140,26,0.58) calc(100% - 4px) 100%),
+    var(--ministry-photo-image) center center / cover no-repeat,
+    var(--ministry-base-image) center center / cover no-repeat;
+  clip-path:polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
+  box-shadow:
+    inset 0 0 0 5px rgba(255,250,243,0.94),
+    inset 0 0 0 8px rgba(255,140,26,0.22),
+    inset 0 0 0 12px rgba(255,255,255,0.78),
+    inset 0 0 18px rgba(255,140,26,0.12),
+    0 22px 42px rgba(146,88,37,0.14);
+}
+
+body.site-page .ministry-card.ministry-card-featured::before{
+  top:10px;
+  left:10px;
+  width:80px;
+  height:80px;
+  border-top:4px solid rgba(255,140,26,0.98);
+  border-left:4px solid rgba(255,140,26,0.98);
+  border-right:0;
+  border-bottom:0;
+  background:none;
+  box-shadow:none;
+}
+
+body.site-page .ministry-card.ministry-card-featured::after{
+  top:10px;
+  right:10px;
+  left:auto;
+  width:54px;
+  height:54px;
+  border-top:3px solid rgba(255,140,26,0.94);
+  border-right:3px solid rgba(255,140,26,0.94);
+  border-left:0;
+  border-bottom:0;
+  background:none;
+  box-shadow:none;
+}
+
+body.site-page .ministry-card.ministry-card-featured h3{
+  color:#1b120a;
+  text-shadow:none;
+}
+
+body.site-page .ministry-card.ministry-card-featured p{
+  color:#1b120a;
+  text-shadow:none;
+}
+
+body.site-page .ministry-card.ministry-card-featured .ministry-card-hint{
+  background:rgba(255,250,243,0.92);
+  color:#1b120a;
+  border-color:rgba(255,120,18,0.28);
+  box-shadow:inset 0 0 0 1px rgba(255,176,102,0.12);
+}
+
+/* Mobile compact layout */
+@media (max-width: 760px){
+  body.site-page:not(.page-home) section.page-hero{
+    padding:76px 12px 18px;
+  }
+
+  body.site-page:not(.page-home) .page-hero-copy{
+    padding:16px 14px 18px;
+  }
+
+  body.site-page .page-kicker{
+    margin-bottom:8px;
+    font-size:0.66rem;
+  }
+
+  body.site-page .page-title{
+    margin-bottom:8px;
+    font-size:1.65rem;
+    line-height:1.08;
+  }
+
+  body.site-page .page-lead{
+    font-size:0.86rem;
+    line-height:1.72;
+  }
+
+  body.site-page .page-section,
+  body.site-page section{
+    padding-left:12px;
+    padding-right:12px;
+    padding-bottom:42px;
+  }
+
+  body.site-page .page-section.page-section-top{
+    padding-top:18px;
+  }
+
+  body.site-page .section-title{
+    margin-bottom:12px;
+    font-size:1.45rem;
+  }
+
+  body.site-page .section-title::after{
+    margin-top:8px;
+  }
+
+  body.site-page .section-subtitle{
+    margin-bottom:14px;
+    font-size:0.86rem;
+    line-height:1.7;
+  }
+
+  body.site-page .feature-grid,
+  body.site-page .page-link-grid,
+  body.site-page .team-grid,
+  body.site-page .service-flow,
+  body.site-page .contact-inline-grid,
+  body.site-page .events-grid,
+  body.site-page .live-grid,
+  body.site-page .offering-wrap,
+  body.site-page .contact-grid,
+  body.site-page .ministry-grid,
+  body.site-page .pastor-grid,
+  body.site-page .beliefs-grid{
+    gap:12px;
+  }
+
+  body.site-page .content-card,
+  body.site-page .feature-card,
+  body.site-page .page-link-card,
+  body.site-page .team-card,
+  body.site-page .event-card,
+  body.site-page .offering-card,
+  body.site-page .belief-card,
+  body.site-page .contact-inline-card,
+  body.site-page .page-banner,
+  body.site-page .info-box,
+  body.site-page .mission-item{
+    padding:16px 14px;
+  }
+
+  body.site-page .content-card p,
+  body.site-page .feature-card p,
+  body.site-page .page-link-card p,
+  body.site-page .team-card p,
+  body.site-page .event-content p,
+  body.site-page .offering-card p,
+  body.site-page .belief-card p,
+  body.site-page .info-box p,
+  body.site-page .mission-item p{
+    margin-bottom:10px;
+    font-size:0.88rem;
+    line-height:1.65;
+  }
+
+  body.site-page .btn,
+  body.site-page .menu a,
+  body.site-page .page-banner-actions .btn,
+  body.site-page .page-actions .btn{
+    min-height:40px;
+    padding:9px 14px;
+    font-size:0.86rem;
+  }
+
+  body.site-page .page-actions,
+  body.site-page .page-banner-actions,
+  body.site-page .hero-btns{
+    gap:8px;
+  }
+
+  body.site-page .ministry-card.ministry-card-featured{
+    min-height:178px;
+    padding:16px 12px;
+  }
+
+  body.site-page .ministry-card.ministry-card-featured h3{
+    font-size:1.18rem;
+  }
+
+  body.site-page .ministry-card-hint{
+    min-height:34px;
+    padding:6px 12px;
+    font-size:0.76rem;
+  }
+
+  body.site-page .page-pastors .pastor-grid{
+    grid-template-columns:1fr;
+  }
+
+  body.site-page .page-pastors .pastor-card{
+    padding:14px 12px;
+  }
+
+  body.site-page .page-pastors .pastor-content{
+    margin-top:-14px;
+    padding:0 10px 12px;
+  }
+
+  body.site-page .page-pastors .pastor-content h3{
+    min-height:36px;
+    padding:8px 10px;
+    font-size:0.88rem;
+  }
+
+  body.site-page .group-schedule-block,
+  body.site-page .staff-tool-disclosure{
+    margin-top:14px;
+  }
+
+  body.site-page .group-schedule-heading{
+    min-height:52px;
+    padding:12px 14px;
+    font-size:1rem;
+  }
+
+  body.site-page .group-schedule-board,
+  body.site-page .staff-tool-board{
+    padding:14px 12px;
+  }
+
+  body.page-home .page-link-grid{
+    gap:12px;
+    padding:0 4px;
+  }
+
+  body.page-home .page-link-card{
+    overflow:visible;
+    padding:22px 18px 18px 30px;
+    box-sizing:border-box;
+  }
+
+  body.page-home .page-link-card .page-link-kicker,
+  body.page-home .page-link-card h3,
+  body.page-home .page-link-card p{
+    position:relative;
+    z-index:1;
+    margin-left:0;
+  }
+
+  body.page-home .page-link-card h3{
+    font-size:1.08rem;
+    line-height:1.28;
+  }
+}
+
+/* Restore sharp primary page buttons */
+body.site-page .hero-btns .btn,
+body.site-page .page-actions .btn,
+body.site-page .page-banner-actions .btn{
+  border-radius:0;
+  clip-path:polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+
+/* Restore sharp orange hover for the eight nav buttons */
+body.site-page .menu a{
+  border-radius:0;
+  clip-path:polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  border-color:rgba(255,120,18,0.56);
+  background:linear-gradient(180deg, #fffdfa 0%, #fff3e2 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,170,98,0.2);
+  color:#1a1008;
+  font-weight:800;
+}
+
+body.site-page .menu a:hover,
+body.site-page .menu a.active,
+body.site-page .menu a.is-current,
+body.site-page .menu a:active{
+  color:#1b120a;
+  border-color:rgba(255,120,18,0.72);
+  background:linear-gradient(180deg, #ffb25d 0%, #ff8a1c 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,0.24);
+}
+
+/* Official-photo inspired style: white space and warm orange polygons */
+body.site-page{
+  background:
+    linear-gradient(32deg, rgba(185,21,26,0.32) 0 10%, rgba(235,59,15,0.3) 10% 20%, rgba(255,119,10,0.25) 20% 33%, transparent 33% 100%),
+    linear-gradient(18deg, rgba(231,58,14,0.2) 0 16%, rgba(255,141,18,0.18) 16% 30%, rgba(255,203,78,0.12) 30% 44%, transparent 44% 100%),
+    linear-gradient(145deg, transparent 0 72%, rgba(255,184,45,0.1) 72% 84%, transparent 84% 100%),
+    radial-gradient(circle at 74% 10%, rgba(255,229,184,0.24), transparent 32%),
+    linear-gradient(180deg, #ffffff 0%, #fffaf2 100%);
+}
+
+body.site-page .page-section::before{
+  background:
+    linear-gradient(28deg, rgba(207,31,21,0.16) 0 12%, rgba(244,82,12,0.15) 12% 24%, rgba(255,145,18,0.12) 24% 38%, transparent 38% 100%),
+    linear-gradient(45deg, rgba(255,190,58,0.1) 0 18%, transparent 18% 100%),
+    radial-gradient(circle at 82% 6%, rgba(255,223,168,0.16), transparent 30%);
+  opacity:1;
+}
+
+body.site-page .page-hero,
+body.site-page .hero{
+  background:
+    linear-gradient(30deg, rgba(189,22,26,0.28) 0 13%, rgba(231,58,15,0.26) 13% 25%, rgba(255,125,10,0.22) 25% 39%, rgba(255,190,55,0.13) 39% 52%, transparent 52% 100%),
+    radial-gradient(circle at 72% 14%, rgba(255,228,178,0.24), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, #fff9ef 100%);
+}
+
+body.site-page .page-hero::after,
+body.site-page .hero::after{
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.18) 48%, rgba(255,248,236,0.64) 100%),
+    linear-gradient(140deg, transparent 0 62%, rgba(255,204,70,0.14) 62% 76%, transparent 76% 100%),
+    linear-gradient(24deg, rgba(235,70,18,0.16) 0 20%, transparent 20% 100%);
+  opacity:1;
+}
+
+body.page-home .page-section.page-section-top{
+  margin-top:-1px;
+  background:
+    linear-gradient(180deg, rgba(255,250,242,0.94) 0%, rgba(255,255,255,0.94) 48%, #fffdf8 100%),
+    linear-gradient(30deg, rgba(178,20,28,0.34) 0 14%, rgba(229,57,14,0.34) 14% 28%, rgba(255,115,8,0.28) 28% 44%, rgba(255,177,32,0.16) 44% 58%, transparent 58% 100%),
+    linear-gradient(154deg, transparent 0 56%, rgba(255,190,52,0.16) 56% 70%, transparent 70% 100%);
+}
+
+body.page-home .page-section.page-section-top::before{
+  background:
+    linear-gradient(28deg, rgba(170,18,30,0.24) 0 12%, rgba(232,61,14,0.24) 12% 26%, rgba(255,126,8,0.2) 26% 42%, transparent 42% 100%),
+    linear-gradient(146deg, transparent 0 58%, rgba(255,198,52,0.17) 58% 72%, transparent 72% 100%),
+    radial-gradient(circle at 18% 10%, rgba(255,132,18,0.32), transparent 26%);
+}
+
+/* Strong orange-white contrast pass */
+body.site-page{
+  background:
+    linear-gradient(32deg, #c91b18 0 8%, #ed4d0c 8% 18%, #ff7800 18% 31%, #ffb12e 31% 42%, transparent 42% 100%),
+    linear-gradient(18deg, rgba(255,102,0,0.74) 0 16%, rgba(255,157,18,0.56) 16% 32%, rgba(255,218,92,0.26) 32% 46%, transparent 46% 100%),
+    linear-gradient(180deg, #ffffff 0%, #fffaf2 100%);
+}
+
+body.site-page .page-hero,
+body.site-page .hero{
+  background:
+    linear-gradient(30deg, #c91b18 0 9%, #e9420d 9% 19%, #ff7800 19% 32%, #ffb22f 32% 43%, transparent 43% 100%),
+    linear-gradient(18deg, rgba(255,112,0,0.44) 0 18%, rgba(255,190,50,0.24) 18% 40%, transparent 40% 100%),
+    linear-gradient(180deg, #ffffff 0%, #fffaf1 100%);
+}
+
+body.site-page .page-hero::after,
+body.site-page .hero::after{
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.18) 60%, rgba(255,248,236,0.78) 100%),
+    linear-gradient(25deg, rgba(218,45,10,0.28) 0 18%, transparent 18% 100%);
+  opacity:1;
+}
+
+body.page-home .page-section.page-section-top{
+  background:
+    linear-gradient(180deg, rgba(255,248,236,0.96) 0%, #ffffff 52%, #fffdf8 100%),
+    linear-gradient(30deg, #c91b18 0 8%, #e9420d 8% 18%, #ff7800 18% 32%, #ffb22f 32% 46%, transparent 46% 100%);
+}
+
+body.page-home .page-section.page-section-top::before{
+  background:
+    linear-gradient(30deg, rgba(201,27,24,0.42) 0 10%, rgba(233,66,13,0.38) 10% 22%, rgba(255,120,0,0.32) 22% 38%, transparent 38% 100%),
+    linear-gradient(150deg, transparent 0 58%, rgba(255,178,47,0.22) 58% 72%, transparent 72% 100%);
+}
+
+body.site-page:not(.page-home) .page-hero{
+  background:
+    linear-gradient(30deg, #b9141f 0 12%, #df390f 12% 25%, #ff7600 25% 40%, #ffb12e 40% 54%, transparent 54% 100%),
+    linear-gradient(150deg, transparent 0 60%, rgba(255,178,47,0.34) 60% 78%, transparent 78% 100%),
+    linear-gradient(180deg, #ffffff 0%, #fff8ea 100%);
+}
+
+body.site-page:not(.page-home) .page-hero::after{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.16) 56%, rgba(255,248,236,0.5) 100%),
+    linear-gradient(25deg, rgba(201,27,24,0.22) 0 18%, transparent 18% 100%);
+}
+
+body.site-page:not(.page-home) .page-hero-copy{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,250,244,0.88)),
+    linear-gradient(30deg, rgba(255,120,0,0.08) 0 22%, transparent 22% 100%);
+  border-color:rgba(255,126,18,0.34);
+}
+
+body.page-home .hero{
+  background:
+    linear-gradient(180deg, #ffffff 0 142px, transparent 142px 100%),
+    linear-gradient(30deg, transparent 0 8%, #c91b18 8% 17%, #e9420d 17% 29%, #ff7800 29% 43%, #ffb22f 43% 55%, transparent 55% 100%),
+    linear-gradient(18deg, transparent 0 10%, rgba(255,112,0,0.42) 10% 26%, rgba(255,190,50,0.24) 26% 44%, transparent 44% 100%),
+    linear-gradient(180deg, #ffffff 0%, #fffaf1 100%);
+}
+
+body.page-home .hero::after{
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.18) 60%, rgba(255,248,236,0.78) 100%),
+    linear-gradient(25deg, transparent 0 9%, rgba(218,45,10,0.24) 9% 22%, transparent 22% 100%);
+}
+
+body.page-home .hero-content{
+  margin-top:42px;
+}
+
+@media (max-width: 760px){
+  body.page-home .hero{
+    background:
+      linear-gradient(180deg, #ffffff 0 116px, transparent 116px 100%),
+      linear-gradient(30deg, transparent 0 6%, #d12a10 6% 20%, #ff7800 20% 40%, #ffb22f 40% 54%, transparent 54% 100%),
+      linear-gradient(180deg, #ffffff 0%, #fffaf1 100%);
+  }
+
+  body.page-home .hero-content{
+    margin-top:20px;
+  }
+}
+
+body.site-page .page-hero-copy,
+body.site-page .hero-panel,
+body.site-page .content-card,
+body.site-page .feature-card,
+body.site-page .page-link-card,
+body.site-page .team-card,
+body.site-page .event-card,
+body.site-page .offering-card,
+body.site-page .belief-card,
+body.site-page .staff-tool-disclosure,
+body.site-page .staff-history-tool,
+body.site-page .history-match-card,
+body.site-page .bible-generator-card,
+body.site-page .staff-output-card{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,250,243,0.9)),
+    linear-gradient(30deg, rgba(237,89,23,0.06) 0 24%, transparent 24% 100%),
+    linear-gradient(140deg, transparent 0 70%, rgba(255,216,140,0.08) 70% 100%);
+  border-color:rgba(224,104,32,0.28);
+}
+
+body.site-page .section-title,
+body.site-page .page-title{
+  color:#d95b00;
+}
+
+body.site-page .page-kicker,
+body.site-page .page-link-kicker{
+  color:rgba(99,73,54,0.72);
+}
+
+body.site-page .hero-btns .btn,
+body.site-page .page-actions .btn,
+body.site-page .page-banner-actions .btn,
+body.site-page .menu a{
+  border-radius:0;
+}
+
+/* Final balance: vivid page titles, quieter content below */
+body.site-page{
+  background:
+    repeating-linear-gradient(90deg, rgba(91,58,35,0.045) 0 1px, transparent 1px 92px),
+    repeating-linear-gradient(0deg, rgba(91,58,35,0.028) 0 1px, transparent 1px 92px),
+    linear-gradient(180deg, #fffdf8 0%, #fbf3ea 100%);
+}
+
+body.site-page .page-hero,
+body.site-page .hero,
+body.site-page:not(.page-home) .page-hero{
+  background:
+    linear-gradient(30deg, #bd171e 0 12%, #e43d0f 12% 25%, #ff7600 25% 40%, #ffb12e 40% 54%, transparent 54% 100%),
+    linear-gradient(150deg, transparent 0 60%, rgba(255,178,47,0.3) 60% 78%, transparent 78% 100%),
+    linear-gradient(180deg, #ffffff 0%, #fff8ea 100%);
+}
+
+body.site-page .page-hero::after,
+body.site-page .hero::after,
+body.site-page:not(.page-home) .page-hero::after{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.15) 56%, rgba(255,248,236,0.52) 100%),
+    linear-gradient(25deg, rgba(201,27,24,0.2) 0 18%, transparent 18% 100%);
+}
+
+body.site-page .page-section{
+  background:
+    repeating-linear-gradient(90deg, rgba(91,58,35,0.04) 0 1px, transparent 1px 92px),
+    repeating-linear-gradient(0deg, rgba(91,58,35,0.026) 0 1px, transparent 1px 92px),
+    linear-gradient(180deg, #fffdf9 0%, #fbf4eb 100%);
+}
+
+body.site-page .page-section::before{
+  background:
+    linear-gradient(28deg, rgba(255,126,18,0.035) 0 18%, transparent 18% 100%),
+    radial-gradient(circle at 10% 6%, rgba(255,166,58,0.08), transparent 24%);
+}
+
+body.page-home .page-section.page-section-top{
+  background:
+    repeating-linear-gradient(90deg, rgba(91,58,35,0.04) 0 1px, transparent 1px 92px),
+    repeating-linear-gradient(0deg, rgba(91,58,35,0.026) 0 1px, transparent 1px 92px),
+    linear-gradient(180deg, #fff8ea 0%, #fffdf9 28%, #fbf4eb 100%);
+}
+
+body.page-home .page-section.page-section-top::before{
+  background:
+    linear-gradient(28deg, rgba(255,126,18,0.04) 0 18%, transparent 18% 100%),
+    radial-gradient(circle at 10% 6%, rgba(255,166,58,0.08), transparent 24%);
+}
+
+body.page-home .hero{
+  background:
+    linear-gradient(180deg, #ffffff 0 142px, transparent 142px 100%),
+    linear-gradient(30deg, transparent 0 8%, #bd171e 8% 17%, #e43d0f 17% 29%, #ff7600 29% 43%, #ffb12e 43% 55%, transparent 55% 100%),
+    linear-gradient(18deg, transparent 0 10%, rgba(255,112,0,0.42) 10% 26%, rgba(255,190,50,0.24) 26% 44%, transparent 44% 100%),
+    linear-gradient(180deg, #ffffff 0%, #fffaf1 100%);
+}
+
+@media (max-width: 760px){
+  body.site-page{
+    background:
+      linear-gradient(24deg, rgba(219,66,22,0.11) 0 16%, rgba(247,167,42,0.09) 16% 30%, transparent 30% 100%),
+      radial-gradient(circle at 86% 8%, rgba(255,226,174,0.18), transparent 34%),
+      linear-gradient(180deg, #fffdf8 0%, #f9efe4 100%);
+  }
+}
+
+/* Home entry cards spacing */
+body.page-home .page-link-card{
+  padding:34px 30px 30px 42px;
+}
+
+body.page-home .page-link-card h3{
+  font-size:1.18rem;
+  line-height:1.32;
+}
+
+body.page-home .page-link-card p{
+  margin-top:14px;
+}
+
+body.page-home .page-link-kicker{
+  margin-bottom:12px;
+}
+
+@media (max-width: 760px){
+  body.page-home .page-link-card{
+    padding:26px 20px 22px 34px;
+  }
+
+  body.page-home .page-link-card h3{
+    font-size:1.12rem;
+  }
+}
+
+/* Homepage hero layout guard */
+body.page-home .hero{
+  padding:196px 20px 86px;
+  background:
+    linear-gradient(30deg, transparent 0 64%, rgba(255,177,47,0.28) 64% 78%, transparent 78% 100%),
+    linear-gradient(26deg, transparent 0 7%, rgba(189,23,30,0.46) 7% 14%, rgba(228,61,15,0.44) 14% 24%, rgba(255,118,0,0.36) 24% 36%, transparent 36% 100%),
+    linear-gradient(180deg, #ffffff 0%, #fffaf1 100%);
+}
+
+body.page-home .hero::before{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.92) 0 116px, rgba(255,255,255,0.46) 116px 100%),
+    repeating-linear-gradient(90deg, rgba(91,58,35,0.034) 0 1px, transparent 1px 92px),
+    repeating-linear-gradient(0deg, rgba(91,58,35,0.022) 0 1px, transparent 1px 92px);
+}
+
+body.page-home .hero::after{
+  height:240px;
+  background:linear-gradient(180deg, rgba(255,250,242,0) 0%, rgba(255,250,242,0.86) 100%);
+}
+
+body.page-home .hero-content{
+  margin-top:0;
+}
+
+body.page-home .hero-panel{
+  margin:0 auto;
+}
+
+@media (max-width: 760px){
+  body.page-home .hero{
+    padding:126px 12px 44px;
+    background:
+      linear-gradient(26deg, transparent 0 5%, rgba(228,61,15,0.36) 5% 20%, rgba(255,118,0,0.32) 20% 36%, transparent 36% 100%),
+      linear-gradient(180deg, #ffffff 0%, #fffaf1 100%);
+  }
+}
+
+/* Remove top-edge color seam */
+body.page-home .hero::before{
+  background:
+    linear-gradient(180deg, #ffffff 0 128px, rgba(255,255,255,0.58) 128px 100%),
+    repeating-linear-gradient(90deg, rgba(91,58,35,0.034) 0 1px, transparent 1px 92px),
+    repeating-linear-gradient(0deg, rgba(91,58,35,0.022) 0 1px, transparent 1px 92px);
+}
+
+body.page-home .hero{
+  border-top:1px solid #ffffff;
+}
+
+/* Keep homepage hero top edge clean white */
+body.page-home .hero{
+  background:
+    linear-gradient(180deg, #ffffff 0 260px, transparent 260px 100%),
+    linear-gradient(30deg, transparent 0 22%, rgba(189,23,30,0.46) 22% 30%, rgba(228,61,15,0.44) 30% 40%, rgba(255,118,0,0.36) 40% 54%, transparent 54% 100%),
+    linear-gradient(30deg, transparent 0 64%, rgba(255,177,47,0.28) 64% 78%, transparent 78% 100%),
+    linear-gradient(180deg, #ffffff 0%, #fffaf1 100%);
+}
+
+body.page-home .hero::before{
+  background:
+    linear-gradient(180deg, #ffffff 0 260px, rgba(255,255,255,0.58) 260px 100%),
+    repeating-linear-gradient(90deg, rgba(91,58,35,0.034) 0 1px, transparent 1px 92px),
+    repeating-linear-gradient(0deg, rgba(91,58,35,0.022) 0 1px, transparent 1px 92px);
+}
+
+/* Homepage emergency layout reset */
+body.page-home .hero{
+  min-height:100vh;
+  padding:216px 20px 88px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #fffaf1 100%);
+}
+
+body.page-home .hero::before{
+  inset:0;
+  border-radius:0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.98) 0 120px, rgba(255,255,255,0.5) 120px 100%),
+    repeating-linear-gradient(90deg, rgba(91,58,35,0.03) 0 1px, transparent 1px 92px),
+    repeating-linear-gradient(0deg, rgba(91,58,35,0.02) 0 1px, transparent 1px 92px);
+}
+
+body.page-home .hero::after{
+  inset:auto 0 0 0;
+  width:100%;
+  height:220px;
+  border-radius:0;
+  background:linear-gradient(180deg, rgba(255,250,242,0) 0%, rgba(255,250,242,0.9) 100%);
+}
+
+body.page-home .hero-content{
+  width:min(94%, 1280px);
+  max-width:1280px;
+  margin:0 auto;
+  padding:0;
+}
+
+body.page-home .hero-panel{
+  margin:0 auto;
+}
+
+@media (max-width: 760px){
+  body.page-home .hero{
+    min-height:auto;
+    padding:126px 12px 44px;
+  }
+}
+
+/* Homepage orange geometric base */
+body.page-home .hero{
+  isolation:isolate;
+  background:linear-gradient(180deg, #ffffff 0%, #ffffff 48%, #fff8ea 100%);
+}
+
+body.page-home .hero::before{
+  z-index:0;
+  inset:0;
+  border-radius:0;
+  background:
+    linear-gradient(180deg, #ffffff 0 120px, rgba(255,255,255,0.68) 120px 64%, rgba(255,250,242,0.38) 100%),
+    radial-gradient(ellipse at 74% 28%, rgba(255,226,178,0.22), transparent 34%),
+    repeating-linear-gradient(90deg, rgba(91,58,35,0.028) 0 1px, transparent 1px 92px),
+    repeating-linear-gradient(0deg, rgba(91,58,35,0.018) 0 1px, transparent 1px 92px);
+}
+
+body.page-home .hero::after{
+  z-index:0;
+  inset:auto 0 0 0;
+  width:100%;
+  height:clamp(270px, 40vh, 500px);
+  border-radius:0;
+  background:
+    linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.82) 18%, rgba(255,255,255,0.26) 46%, rgba(255,255,255,0) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 520' preserveAspectRatio='none'%3E%3Cpolygon points='0,180 0,520 170,520 215,305 88,240' fill='%23b9161f'/%3E%3Cpolygon points='88,240 215,305 390,268 305,190' fill='%23ffc2aa' opacity='.58'/%3E%3Cpolygon points='0,338 0,520 330,520 215,305' fill='%23df3915'/%3E%3Cpolygon points='215,305 330,520 520,520 390,268' fill='%23f15a12'/%3E%3Cpolygon points='390,268 520,520 725,520 606,342' fill='%23ff7900' opacity='.92'/%3E%3Cpolygon points='606,342 725,520 948,520 810,372' fill='%23ffad30' opacity='.76'/%3E%3Cpolygon points='810,372 948,520 1170,520 1030,392' fill='%23ffd06b' opacity='.54'/%3E%3Cpolygon points='1030,392 1170,520 1600,520 1600,440 1320,382' fill='%23fff0be' opacity='.72'/%3E%3Cpolygon points='0,430 150,520 0,520' fill='%239f121f' opacity='.84'/%3E%3Cpolygon points='150,520 330,520 260,438' fill='%23f46d0c'/%3E%3Cpolygon points='330,520 520,520 445,416' fill='%23d94112' opacity='.78'/%3E%3Cpolygon points='520,520 725,520 640,430' fill='%23f38b16' opacity='.68'/%3E%3Cpolygon points='725,520 948,520 860,446' fill='%23ffc14c' opacity='.48'/%3E%3Cpolygon points='0,240 88,240 0,158' fill='%23ffd7c5' opacity='.46'/%3E%3Cpolygon points='305,190 390,268 606,342 520,225' fill='%23ffe1b3' opacity='.34'/%3E%3Cpolygon points='520,225 606,342 810,372 748,272' fill='%23fff0c9' opacity='.28'/%3E%3Cpolygon points='1170,520 1320,382 1600,440 1600,520' fill='%23fff8dd' opacity='.7'/%3E%3Cpath d='M0 188 C230 284 348 202 560 320 C820 462 1110 334 1600 424 L1600 520 L0 520 Z' fill='%23fff2d2' opacity='.2'/%3E%3C/svg%3E") left bottom / 100% 100% no-repeat;
+  pointer-events:none;
+  opacity:0.96;
+}
+
+body.page-home .hero-content{
+  position:relative;
+  z-index:1;
+}
+
+@media (max-width: 760px){
+  body.page-home .hero::before{
+    background:
+      linear-gradient(180deg, #ffffff 0 104px, rgba(255,255,255,0.74) 104px 64%, rgba(255,250,242,0.4) 100%),
+      radial-gradient(ellipse at 72% 30%, rgba(255,226,178,0.18), transparent 36%),
+      repeating-linear-gradient(90deg, rgba(91,58,35,0.024) 0 1px, transparent 1px 68px),
+      repeating-linear-gradient(0deg, rgba(91,58,35,0.016) 0 1px, transparent 1px 68px);
+  }
+
+  body.page-home .hero::after{
+    height:clamp(220px, 34vh, 340px);
+    background-size:150% 100%, 150% 100%;
+    background-position:center bottom, center bottom;
+  }
+}
