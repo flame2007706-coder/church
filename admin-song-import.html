@@ -305,6 +305,28 @@
       });
     };
 
+    const extractPptParagraphLines = (paragraph) => {
+      const lines = [];
+      let current = "";
+      const walk = (node) => {
+        if (node.localName === "t") {
+          current += node.textContent || "";
+          return;
+        }
+        if (node.localName === "br") {
+          const line = cleanText(current);
+          if (line) lines.push(line);
+          current = "";
+          return;
+        }
+        Array.from(node.childNodes || []).forEach(walk);
+      };
+      walk(paragraph);
+      const line = cleanText(current);
+      if (line) lines.push(line);
+      return lines;
+    };
+
     const loadOldArchive = async () => {
       const file = oldArchiveInput.files[0];
       if (!file) return [];
@@ -326,10 +348,7 @@
         const xml = await zip.file(path).async("text");
         const doc = parser.parseFromString(xml, "application/xml");
         const paragraphs = Array.from(doc.getElementsByTagNameNS("*", "p"))
-          .map((paragraph) => Array.from(paragraph.getElementsByTagNameNS("*", "t"))
-            .map((node) => node.textContent)
-            .join("")
-            .trim())
+          .flatMap((paragraph) => extractPptParagraphLines(paragraph))
           .filter(Boolean);
         slides.push(paragraphs);
       }

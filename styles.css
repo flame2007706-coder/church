@@ -4217,3 +4217,189 @@ footer{
 #beliefs-modal .belief-card.belief-we-believe .belief-lockup-zh{
   color:#2a1204;
 }
+
+@keyframes pageFloatIn{
+  from{
+    opacity:0;
+    transform:translateY(18px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes softPulseLine{
+  0%, 100%{
+    transform:scaleX(0.52);
+    opacity:0.42;
+  }
+  50%{
+    transform:scaleX(1);
+    opacity:0.88;
+  }
+}
+
+@keyframes warmSweep{
+  from{
+    transform:translateX(-120%) skewX(-18deg);
+  }
+  to{
+    transform:translateX(180%) skewX(-18deg);
+  }
+}
+
+body.site-page main,
+body.site-page .page-hero-copy,
+body.site-page .content-card,
+body.site-page .feature-card,
+body.site-page .page-link-card,
+body.site-page .team-card,
+body.site-page .ministry-card,
+body.site-page .event-card,
+body.site-page .offering-card,
+body.site-page .belief-card,
+body.site-page .staff-tool-disclosure{
+  animation:pageFloatIn 0.64s ease both;
+}
+
+body.site-page .content-card:nth-child(2),
+body.site-page .feature-card:nth-child(2),
+body.site-page .page-link-card:nth-child(2),
+body.site-page .team-card:nth-child(2),
+body.site-page .ministry-card:nth-child(2),
+body.site-page .event-card:nth-child(2){
+  animation-delay:0.06s;
+}
+
+body.site-page .content-card:nth-child(3),
+body.site-page .feature-card:nth-child(3),
+body.site-page .page-link-card:nth-child(3),
+body.site-page .team-card:nth-child(3),
+body.site-page .ministry-card:nth-child(3),
+body.site-page .event-card:nth-child(3){
+  animation-delay:0.12s;
+}
+
+.page-title,
+.section-title,
+.group-schedule-heading{
+  position:relative;
+}
+
+.page-title::after,
+.section-title::after{
+  content:"";
+  display:block;
+  width:92px;
+  height:3px;
+  margin-top:12px;
+  border-radius:999px;
+  background:linear-gradient(90deg, rgba(255,132,26,0), rgba(255,132,26,0.96), rgba(255,196,92,0));
+  transform-origin:left center;
+  animation:softPulseLine 3.8s ease-in-out infinite;
+}
+
+.page-hero-copy .page-title::after{
+  background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.92), rgba(255,166,64,0));
+}
+
+.btn,
+.menu a,
+.group-schedule-heading{
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    color 0.22s ease;
+}
+
+.btn:hover,
+.menu a:hover,
+.group-schedule-heading:hover{
+  transform:translateY(-2px);
+}
+
+.btn:active,
+.menu a:active,
+.group-schedule-heading:active{
+  transform:translateY(0) scale(0.99);
+}
+
+.btn-primary{
+  position:relative;
+  overflow:hidden;
+}
+
+.btn-primary::after{
+  content:"";
+  position:absolute;
+  top:-20%;
+  left:0;
+  width:42%;
+  height:140%;
+  pointer-events:none;
+  background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.22), rgba(255,255,255,0));
+  transform:translateX(-120%) skewX(-18deg);
+  opacity:0;
+}
+
+.btn-primary:hover::after{
+  opacity:1;
+  animation:warmSweep 0.72s ease;
+}
+
+.content-card,
+.feature-card,
+.page-link-card,
+.team-card,
+.event-card,
+.offering-card,
+.belief-card,
+.history-match-card{
+  transition:transform 0.26s ease, box-shadow 0.26s ease, border-color 0.26s ease;
+}
+
+.content-card:hover,
+.feature-card:hover,
+.page-link-card:hover,
+.team-card:hover,
+.event-card:hover,
+.offering-card:hover,
+.belief-card:hover,
+.staff-tool-disclosure:hover .group-schedule-heading,
+.history-match-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 22px 48px rgba(146,88,37,0.14);
+}
+
+.event-card img,
+.team-card img,
+.pastor-card img{
+  transition:transform 0.5s ease, filter 0.5s ease;
+}
+
+.event-card:hover img,
+.team-card:hover img,
+.pastor-card:hover img{
+  transform:scale(1.035);
+  filter:saturate(1.08) contrast(1.04);
+}
+
+.staff-input:focus,
+.staff-textarea:focus,
+.staff-option input:focus-visible{
+  box-shadow:0 0 0 4px rgba(255,132,26,0.18), 0 12px 26px rgba(146,88,37,0.08);
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+    transition-duration:0.01ms !important;
+  }
+}

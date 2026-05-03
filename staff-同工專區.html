@@ -703,45 +703,116 @@
     const findLinkedPptSong = (wordMatch, allSongs) => {
       if (wordMatch.sourceType === "PPT") return wordMatch;
       const stem = archiveSourceStem(wordMatch.fileName || wordMatch.source);
-      const candidates = allSongs.filter((song) => (
-        song.sourceType === "PPT" &&
-        archiveSourceStem(song.fileName || song.source) === stem
-      ));
+      const pptSongs = allSongs.filter((song) => song.sourceType === "PPT");
+      const candidates = pptSongs.filter((song) => archiveSourceStem(song.fileName || song.source) === stem);
 
-      if (!candidates.length) return wordMatch;
+      const scorePptSong = (song) => {
+        const wordText = normalizeLyricLine(wordMatch.lines.join(""));
+        const pptText = normalizeLyricLine(song.lines.join(""));
+        const pptLineScore = song.lines.reduce((total, line) => {
+          const key = normalizeLyricLine(line);
+          return total + (key.length >= 4 && wordText.includes(key) ? 1 : 0);
+        }, 0);
+        const wordLineScore = wordMatch.lines.reduce((total, line) => {
+          const key = normalizeLyricLine(line);
+          return total + (key.length >= 4 && pptText.includes(key) ? 2 : 0);
+        }, 0);
+        return pptLineScore + wordLineScore;
+      };
 
-      const wordLineKeys = new Set(wordMatch.lines.map(normalizeLyricLine).filter(Boolean));
-      const best = candidates
+      const findBest = (songs) => songs
         .map((song) => ({
           song,
-          score: song.lines.reduce((total, line) => total + (wordLineKeys.has(normalizeLyricLine(line)) ? 1 : 0), 0)
+          score: scorePptSong(song)
         }))
         .sort((a, b) => b.score - a.score)[0];
 
-      return best?.score >= 2 ? best.song : wordMatch;
+      const sameFileBest = findBest(candidates);
+      if (sameFileBest?.score >= 2) return sameFileBest.song;
+
+      const globalBest = findBest(pptSongs);
+      return globalBest?.score >= 4 ? globalBest.song : wordMatch;
     };
 
     const songDisplayKey = (song) => {
-      const title = normalizeLyricLine(song.title || "");
-      if (title && title !== normalizeLyricLine("未對到 Word 歌名")) {
-        return `title:${title}`;
-      }
-      return `lyrics:${normalizeLyricLine(song.text).slice(0, 120)}`;
+      return `lyrics:${normalizeLyricLine(song.text)}`;
     };
 
     const removeDuplicateSongMatches = (songs) => {
-      const seen = new Set();
-      return songs
-        .sort((a, b) => {
-          if (a.sourceType === b.sourceType) return 0;
-          return a.sourceType === "Word" ? -1 : 1;
+      const groups = new Map();
+      songs.forEach((song) => {
+        const key = songDisplayKey(song);
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(song);
+      });
+
+      return Array.from(groups.values())
+        .map((group) => {
+          const wordSong = group.find((song) => song.sourceType === "Word");
+          const pptSong = group.find((song) => song.sourceType === "PPT");
+          const representative = wordSong || pptSong || group[0];
+          if (wordSong && pptSong) representative.linkedPpt = pptSong;
+          return {
+            song: representative,
+            hasWordAndPpt: Boolean(wordSong && pptSong),
+            hasWord: Boolean(wordSong)
+          };
         })
-        .filter((song) => {
-          const key = songDisplayKey(song);
-          if (seen.has(key)) return false;
-          seen.add(key);
-          return true;
-        });
+        .sort((a, b) => {
+          if (a.hasWordAndPpt !== b.hasWordAndPpt) return a.hasWordAndPpt ? -1 : 1;
+          if (a.hasWord !== b.hasWord) return a.hasWord ? -1 : 1;
+          return 0;
+        })
+        .map((item) => item.song);
+    };
+
+    const sortMatchesByPairedFiles = (songs, allSongs) => {
+      return songs
+        .map((song) => {
+          const linkedPpt = song.linkedPpt || findLinkedPptSong(song, allSongs);
+          const hasLinkedPpt = linkedPpt !== song && linkedPpt.sourceType === "PPT";
+          if (hasLinkedPpt) song.linkedPpt = linkedPpt;
+          return {
+            song,
+            hasLinkedPpt
+          };
+        })
+        .sort((a, b) => {
+          if (a.hasLinkedPpt !== b.hasLinkedPpt) return a.hasLinkedPpt ? -1 : 1;
+          return 0;
+        })
+        .map((item) => item.song);
+    };
+
+    const songCompletenessScore = (song) => {
+      const textLength = normalizeLyricLine(song.text || song.lines.join("")).length;
+      const lineCount = Array.isArray(song.lines) ? song.lines.length : 0;
+      const pageCount = Array.isArray(song.slideBlocks) ? song.slideBlocks.length : 0;
+      const hasPpt = song.sourceType === "PPT" || song.linkedPpt?.sourceType === "PPT";
+      const hasWord = song.sourceType === "Word";
+      return textLength + (lineCount * 18) + (pageCount * 10) + (hasPpt ? 24 : 0) + (hasWord ? 8 : 0);
+    };
+
+    const removeDuplicateTitles = (songs) => {
+      const groups = new Map();
+      songs.forEach((song) => {
+        const title = normalizeLyricLine(song.title || compactSongTitle(song.lines, ""));
+        if (!title || title === normalizeLyricLine("未對到 Word 歌名")) {
+          groups.set(`__single_${groups.size}`, [song]);
+          return;
+        }
+        if (!groups.has(title)) groups.set(title, []);
+        groups.get(title).push(song);
+      });
+
+      return Array.from(groups.values()).map((group) => {
+        return group
+          .map((song) => ({
+            song,
+            score: songCompletenessScore(song)
+          }))
+          .sort((a, b) => b.score - a.score)[0].song;
+      });
     };
 
     const isOrphanPptSong = (song) => (
@@ -780,13 +851,17 @@
       try {
         const allSongs = ARCHIVE_SONGS.map((song, index) => sanitizeArchiveSong(song, index));
 
-        const allMatches = removeDuplicateSongMatches(
-          allSongs.filter((song) => !isOrphanPptSong(song) && normalizeSearchText(song.text).includes(query))
+        const allMatches = sortMatchesByPairedFiles(
+          removeDuplicateSongMatches(
+            allSongs.filter((song) => !isOrphanPptSong(song) && normalizeSearchText(song.text).includes(query))
+          ),
+          allSongs
         );
-        const exactTitleMatches = allMatches.filter((song) => (
+        const titleDedupedMatches = removeDuplicateTitles(allMatches);
+        const exactTitleMatches = titleDedupedMatches.filter((song) => (
           normalizeLyricLine(song.title || "") === titleQuery
         ));
-        const displayMatches = exactTitleMatches.length ? exactTitleMatches : allMatches;
+        const displayMatches = exactTitleMatches.length ? exactTitleMatches : titleDedupedMatches;
         const matches = displayMatches.slice(0, 8);
 
         if (!matches.length) {
@@ -809,19 +884,25 @@
           const title = match.title || compactSongTitle(match.lines, "搜尋結果");
           const linkedPpt = findLinkedPptSong(match, allSongs);
           match.linkedPpt = linkedPpt;
-          const linkedPptNote = linkedPpt !== match
-            ? `<p>對應 PPT：${escapeHtml(linkedPpt.fileName || linkedPpt.source || "歷年歌詞資料庫")}</p>`
+          const hasPpt = linkedPpt.sourceType === "PPT";
+          const linkedPptNote = hasPpt && linkedPpt !== match
+            ? `<p>PPT 來源：${escapeHtml(linkedPpt.fileName || linkedPpt.source || "歷年歌詞資料庫")}</p>`
             : "";
+          const missingPptNote = hasPpt ? "" : '<p class="staff-empty">＊這首目前無 PPT</p>';
+          const pptButton = hasPpt
+            ? `<button class="btn btn-primary" type="button" data-history-ppt="${index}">下載這首 PPT</button>`
+            : '<button class="btn btn-outline" type="button" disabled>這首目前無 PPT</button>';
           const longFileNote = match.lines.length > 30
             ? '<p class="staff-empty">這筆歌詞很長，可能是來源檔案裡多首歌沒有分隔。</p>'
             : "";
           return `
           <article class="history-match-card">
             <h3>${escapeHtml(title)}</h3>
-            <p>來源：${escapeHtml(match.fileName || match.source || "歷年歌詞資料庫")}</p>
+            <p>Word 來源：${escapeHtml(match.fileName || match.source || "歷年歌詞資料庫")}</p>
             ${linkedPptNote}
+            ${missingPptNote}
             <div class="staff-actions">
-              <button class="btn btn-primary" type="button" data-history-ppt="${index}">下載這首 PPT</button>
+              ${pptButton}
               <button class="btn btn-primary" type="button" data-history-docx="${index}">下載這首 Word</button>
             </div>
             ${longFileNote}
@@ -836,6 +917,10 @@
             const pptMatch = match.linkedPpt || match;
             const title = match.title || compactSongTitle(match.lines, "搜尋結果");
             currentHistoryMatch = match;
+            if (pptMatch.sourceType !== "PPT") {
+              historyStatus.textContent = "這首目前無 PPT";
+              return;
+            }
             await createPptxFromBlocks(pptMatch.slideBlocks, title);
             historyStatus.textContent = "已產生這首歌的 PPT";
           });

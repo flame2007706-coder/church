@@ -151,6 +151,27 @@ const extractParagraphs = (xml, paragraphTag, textTag) => {
   });
 };
 
+const extractPptSlideLines = (xml) => {
+  const paragraphPattern = /<a:p[^>]*>([\s\S]*?)<\/a:p>/g;
+  return Array.from(xml.matchAll(paragraphPattern)).flatMap((paragraphMatch) => {
+    const lines = [];
+    let current = "";
+    const tokenPattern = /<a:t(?:\s[^>]*)?>([\s\S]*?)<\/a:t>|<a:br\b[^>]*\/>/g;
+    Array.from(paragraphMatch[1].matchAll(tokenPattern)).forEach((tokenMatch) => {
+      if (tokenMatch[1] !== undefined) {
+        current += decodeXml(tokenMatch[1]);
+      } else {
+        const line = cleanText(current);
+        if (line) lines.push(line);
+        current = "";
+      }
+    });
+    const line = cleanText(current);
+    if (line) lines.push(line);
+    return lines;
+  });
+};
+
 const sourceGroupKey = (fileName) => path.basename(fileName)
   .replace(/\.(pptx|docx)$/i, "")
   .replace(/\s+/g, "")
@@ -208,7 +229,7 @@ const readPptxSongs = async (filePath) => {
 
   for (const slidePath of slidePaths) {
     const xml = await zip.file(slidePath).async("text");
-    const lines = extractParagraphs(xml, "a:p", "a:t").filter(Boolean);
+    const lines = extractPptSlideLines(xml).filter(Boolean);
     slides.push(lines);
   }
 
