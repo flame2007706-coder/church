@@ -33,7 +33,7 @@ const setMenuOpen = (isOpen) => {
   menuToggle.setAttribute("aria-label", isOpen ? "收合網站選單" : "展開網站選單");
 };
 
-const shouldUseHoverMenu = () => window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1101px)").matches;
+const shouldUseHoverMenu = () => false;
 
 const clearMenuCloseTimer = () => {
   if (!menuCloseTimer) return;
@@ -53,10 +53,6 @@ if (siteHeader && siteMenu && menuToggle) {
   setMenuOpen(false);
 
   menuToggle.addEventListener("click", () => {
-    if (shouldUseHoverMenu()) {
-      setMenuOpen(true);
-      return;
-    }
     setMenuOpen(!siteHeader.classList.contains("menu-open"));
   });
 
@@ -96,6 +92,64 @@ if (siteHeader && siteMenu && menuToggle) {
 }
 
 updateCurrentMenuLink();
+
+const escapeHtml = (value = "") => String(value)
+  .replace(/&/g, "&amp;")
+  .replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;")
+  .replace(/'/g, "&#039;");
+
+const renderEventLists = () => {
+  const eventLists = document.querySelectorAll("[data-events-list]");
+  const events = Array.isArray(window.FLAME_EVENTS) ? window.FLAME_EVENTS : [];
+  if (!eventLists.length || !events.length) return;
+
+  eventLists.forEach((list) => {
+    const isHomeList = list.dataset.eventsList === "home";
+    const visibleEvents = isHomeList ? events.slice(0, 3) : events;
+
+    list.innerHTML = visibleEvents.map((eventItem) => {
+      const description = isHomeList ? escapeHtml(eventItem.summary) : (eventItem.detail || escapeHtml(eventItem.summary));
+      const dateBadge = eventItem.date ? `<span class="event-date-badge">${escapeHtml(eventItem.date)}</span>` : "";
+
+      return `
+        <article class="event-card">
+          <div class="event-image-wrap">
+            <img src="${escapeHtml(eventItem.image)}" alt="${escapeHtml(eventItem.title)}" />
+            ${dateBadge}
+          </div>
+          <div class="event-content">
+            <h3>${escapeHtml(eventItem.title)}</h3>
+            <p>${description}</p>
+          </div>
+        </article>
+      `;
+    }).join("");
+  });
+};
+
+renderEventLists();
+
+// Homepage desktop slideshow: 1 -> 2 -> 3 -> 4 -> 5 -> 1, five seconds each.
+const homeHeroSlides = Array.from(document.querySelectorAll(".home-hero-slider img:not(.mobile-slide)")).slice(0, 5);
+
+if (homeHeroSlides.length) {
+  let activeHomeHeroSlide = 0;
+
+  const showHomeHeroSlide = (index) => {
+    homeHeroSlides.forEach((slide, slideIndex) => {
+      slide.classList.toggle("is-active", slideIndex === index);
+    });
+  };
+
+  showHomeHeroSlide(activeHomeHeroSlide);
+
+  window.setInterval(() => {
+    activeHomeHeroSlide = (activeHomeHeroSlide + 1) % homeHeroSlides.length;
+    showHomeHeroSlide(activeHomeHeroSlide);
+  }, 5000);
+}
 
 window.addEventListener("scroll", () => {
   if (!siteHeader) return;
