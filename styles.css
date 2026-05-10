@@ -7635,3 +7635,13 @@ body.site-page:not(.page-home) section.page-hero::before{
     font-size: clamp(2.46rem, 11vw, 3rem) !important;
   }
 }
+
+body.page-home .page-section.page-section-top{
+  padding-top: 18px !important;
+}
+
+@media (max-width: 768px){
+  body.page-home .page-section.page-section-top{
+    padding-top: 10px !important;
+  }
+}
