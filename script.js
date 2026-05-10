@@ -131,8 +131,12 @@ const renderEventLists = () => {
 
 renderEventLists();
 
-// Homepage desktop slideshow: 1 -> 2 -> 3 -> 4 -> 5 -> 1, five seconds each.
-const homeHeroSlides = Array.from(document.querySelectorAll(".home-hero-slider img:not(.mobile-slide)")).slice(0, 5);
+// Homepage slideshow: desktop uses home-slide, mobile uses home-mobile; three seconds each.
+const homeHeroSlider = document.querySelector(".home-hero-slider");
+const isMobileHero = window.matchMedia("(max-width: 768px)").matches;
+const homeHeroSlides = homeHeroSlider
+  ? Array.from(homeHeroSlider.querySelectorAll(isMobileHero ? "img.mobile-slide" : "img:not(.mobile-slide)")).slice(0, isMobileHero ? undefined : 5)
+  : [];
 
 if (homeHeroSlides.length) {
   let activeHomeHeroSlide = 0;
@@ -148,7 +152,7 @@ if (homeHeroSlides.length) {
   window.setInterval(() => {
     activeHomeHeroSlide = (activeHomeHeroSlide + 1) % homeHeroSlides.length;
     showHomeHeroSlide(activeHomeHeroSlide);
-  }, 5000);
+  }, 3000);
 }
 
 window.addEventListener("scroll", () => {
@@ -218,6 +222,9 @@ if (allModals.length || modalTriggers.length || modalCloseButtons.length) {
     lastModalTrigger = trigger;
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
+    modal.style.opacity = "1";
+    modal.style.visibility = "visible";
+    modal.style.pointerEvents = "auto";
     document.body.classList.add("modal-open");
   };
 
@@ -225,6 +232,9 @@ if (allModals.length || modalTriggers.length || modalCloseButtons.length) {
     if (!modal) return;
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
+    modal.style.opacity = "";
+    modal.style.visibility = "";
+    modal.style.pointerEvents = "";
     document.body.classList.remove("modal-open");
     if (modal.id && window.location.hash === `#${modal.id}`) {
       window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
