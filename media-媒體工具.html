@@ -191,6 +191,7 @@
   <script src="song-歌詞.js"></script>
   <script src="bible-cuv.js"></script>
   <script>
+    (() => {
     document.querySelectorAll(".staff-tool-disclosure").forEach((tool) => {
       tool.removeAttribute("open");
     });
@@ -1031,6 +1032,7 @@
     });
 
     updatePreview();
+    })();
   </script>
 </body>
 </html>
