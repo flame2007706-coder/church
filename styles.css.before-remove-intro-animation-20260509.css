@@ -3729,83 +3729,6 @@ section.page-hero::before{
   z-index: 1200;
 }
 
-.modal.is-open{
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.modal-card{
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,248,239,0.98)),
-    linear-gradient(135deg, rgba(255,140,26,0.1), rgba(255,255,255,0));
-  border: 1px solid rgba(255,120,18,0.34);
-  box-shadow: 0 28px 70px rgba(95,59,31,0.2);
-  color: var(--text);
-}
-
-.modal-card::before{
-  border-top-color: rgba(255,120,18,0.78);
-  border-left-color: rgba(255,120,18,0.78);
-}
-
-.modal-card::after{
-  border-right-color: rgba(255,120,18,0.5);
-  border-bottom-color: rgba(255,120,18,0.5);
-}
-
-.modal-close{
-  background: rgba(255,255,255,0.72);
-  color: #5a2a0a;
-  border-color: rgba(255,120,18,0.42);
-}
-
-.modal-close:hover{
-  background: rgba(255,120,18,0.14);
-  color: var(--accent-deep);
-}
-
-.modal-eyebrow{
-  color: #8b7565;
-}
-
-.modal-title{
-  color: var(--accent-deep);
-}
-
-.modal-body,
-.modal-verse{
-  color: var(--text-soft);
-}
-
-.modal-intro,
-.modal-quote{
-  background: rgba(255,140,26,0.06);
-  color: #2a1b10;
-  border-left-color: rgba(255,120,18,0.86);
-}
-
-.modal-time,
-.modal-verse{
-  border-color: rgba(255,120,18,0.28);
-  background: rgba(255,140,26,0.08);
-  color: #3d2716;
-}
-
-.modal-card-wide .mission-item{
-  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,249,243,0.98));
-  border-color: rgba(255,120,18,0.24);
-  box-shadow: 0 14px 34px rgba(146,88,37,0.1);
-}
-
-.modal-card-wide .mission-item h3{
-  color: var(--accent-deep);
-}
-
-.modal-card-wide .mission-item p{
-  color: #2a1b10;
-}
-
 .ministry-card{
   background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,247,238,0.96));
   border-radius: 18px;
@@ -3817,7 +3740,7 @@ section.page-hero::before{
   position: relative;
 }
 
-body.site-page .ministry-card.ministry-card-featured{
+.ministry-card.ministry-card-featured{
   --ministry-base-image: linear-gradient(135deg, rgba(36,38,46,0.96), rgba(10,11,15,0.98));
   --ministry-photo-image: none;
   display: flex;
@@ -5246,7 +5169,7 @@ body.site-page .pastor-card:hover img{
     top: 0 !important;
     width: 36% !important;
     height: 62px !important;
-    z-index: 3 !important;
+    z-index: 4 !important;
     opacity: 0.9 !important;
     clip-path: polygon(0 0, 88% 0, 0 100%) !important;
     pointer-events: none !important;
@@ -5299,7 +5222,7 @@ body.site-page .pastor-card:hover img{
 
   body.page-home .home-hero-copy{
     position: relative !important;
-    z-index: 2 !important;
+    z-index: 6 !important;
     min-height: 0;
     max-width: 268px !important;
     margin: 0;
@@ -6151,7 +6074,7 @@ body.page-home .page-section.page-section-top .section-title::after{
     left: 0 !important;
     right: auto !important;
     bottom: 0 !important;
-    z-index: 6 !important;
+    z-index: 4 !important;
     width: 58% !important;
     height: 72px !important;
     background: linear-gradient(135deg, rgba(255,255,255,0.42), rgba(255,255,255,0.06) 72%),
@@ -6189,7 +6112,7 @@ body.page-home .page-section.page-section-top .section-title::after{
     width: 224px !important;
     height: 122px !important;
     opacity: 0.86 !important;
-    clip-path: polygon(0 0, 72% 0, 42% 36%, 0 46%) !important;
+    clip-path: polygon(0 0, 72% 0, 0 100%) !important;
   }
 
   body.page-home .home-hero-layout::after{
@@ -6516,6 +6439,104 @@ body.page-home .page-section.page-section-top .section-title::after{
   }
 }
 
+body.page-home .home-hero-copy,
+body.page-home .home-hero-slider{
+  transition: transform 1.15s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.15s ease;
+}
+
+body.page-home:not(.hero-intro-done) .home-hero-slider{
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+body.page-home.hero-intro-done .home-hero-slider{
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+body.page-home:not(.hero-intro-done) .hero::after{
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  right: 0 !important;
+  top: auto !important;
+  bottom: 0 !important;
+  left: auto !important;
+  z-index: 4 !important;
+  width: min(25vw, 300px) !important;
+  height: 178px !important;
+  border-radius: 0 !important;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.34), rgba(255,255,255,0.1) 72%, rgba(255,255,255,0.34)),
+    var(--home-poly-orange) center / cover no-repeat !important;
+  clip-path: polygon(100% 100%, 32% 100%, 100% 0) !important;
+  opacity: 0.7 !important;
+  pointer-events: none !important;
+}
+
+body.page-home:not(.hero-intro-done) .home-hero-layout::after{
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+body.page-home:not(.hero-intro-done) .home-hero-copy::before{
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+body.page-home:not(.hero-intro-done) .home-hero-layout::after{
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: auto !important;
+  bottom: 0 !important;
+  z-index: 4 !important;
+  width: min(30vw, 380px) !important;
+  height: 176px !important;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.42), rgba(255,255,255,0.06) 72%),
+    var(--home-poly-orange) center / cover no-repeat !important;
+  clip-path: polygon(0 0, 100% 100%, 0 100%) !important;
+  opacity: 0.66 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+}
+
+@media (min-width: 769px){
+  body.page-home:not(.hero-intro-done) .home-hero-copy{
+    transform: translate(245px, 28px) !important;
+  }
+}
+
+@media (max-width: 768px){
+  body.page-home:not(.hero-intro-done) .home-hero-copy{
+    transform: translateX(42px) !important;
+  }
+
+  body.page-home:not(.hero-intro-done) .home-hero-copy .page-kicker,
+  body.page-home:not(.hero-intro-done) .home-hero-copy h1,
+  body.page-home:not(.hero-intro-done) .home-hero-copy .hero-subtitle,
+  body.page-home:not(.hero-intro-done) .home-hero-copy p,
+  body.page-home:not(.hero-intro-done) .hero-btns{
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  body.page-home:not(.hero-intro-done) .home-hero-copy h1{
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    justify-content: center !important;
+  }
+
+  body.page-home:not(.hero-intro-done) .hero-btns{
+    justify-content: center !important;
+  }
+}
+
 @media (min-width: 769px){
   body.page-home .home-hero-copy::before,
   body.page-home .home-hero-copy::after{
@@ -6599,12 +6620,12 @@ body.page-home .page-section.page-section-top .section-title::after{
     left: 0 !important;
     top: 0 !important;
     width: 224px !important;
-    height: 88px !important;
+    height: 122px !important;
     z-index: 7 !important;
     opacity: 0.86 !important;
     visibility: visible !important;
     pointer-events: none !important;
-    clip-path: polygon(0 0, 72% 0, 42% 36%, 0 46%) !important;
+    clip-path: polygon(0 0, 72% 0, 0 100%) !important;
     background:
       linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.34) 72%, rgba(255,255,255,0.1)),
       var(--home-poly-orange) center / cover no-repeat !important;
@@ -6635,11 +6656,6 @@ body.page-home .page-section.page-section-top .section-title::after{
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
-  }
-
-  body.page-home .hero::before{
-    z-index: 8 !important;
-    clip-path: polygon(0 22%, 22% 36%, 48% 66%, 78% 74%, 100% 100%, 0 100%) !important;
   }
 }
 
@@ -7184,778 +7200,75 @@ body.page-home .page-section.page-section-top .section-title::after{
 }
 }
 
-@media (max-width: 768px){
-  body.page-home .hero-content::before{
-    content: "" !important;
-    display: block !important;
+body.page-home .home-hero-copy,
+body.page-home .home-hero-slider{
+  transition: left 1.15s cubic-bezier(0.2, 0.8, 0.2, 1), top 1.15s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.15s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.15s ease !important;
+}
+
+body.page-home:not(.hero-intro-done) .home-hero-slider{
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+body.page-home.hero-intro-done .home-hero-slider{
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+@media (min-width: 769px){
+  body.page-home.hero-intro-done .home-hero-copy{
     position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 224px !important;
-    height: 88px !important;
-    z-index: 7 !important;
-    opacity: 0.86 !important;
-    visibility: visible !important;
-    pointer-events: none !important;
-    clip-path: polygon(0 0, 72% 0, 0 100%) !important;
-    background:
-      linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.34) 72%, rgba(255,255,255,0.1)),
-      var(--home-poly-orange) center / cover no-repeat !important;
+    left: clamp(74px, 9vw, 132px) !important;
+    top: 50% !important;
+    margin-left: 0 !important;
+    transform: translateY(-34%) !important;
   }
 
-  body.page-home .hero::before{
-    display: none !important;
-  }
-
-  body.page-home .home-hero-layout::after{
-    content: "" !important;
-    display: block !important;
+  body.page-home:not(.hero-intro-done) .home-hero-copy{
     position: absolute !important;
-    left: 0 !important;
-    bottom: 0 !important;
-    right: auto !important;
-    z-index: 6 !important;
-    width: min(72vw, 560px) !important;
-    height: 132px !important;
-    opacity: 0.72 !important;
-    visibility: visible !important;
-    pointer-events: none !important;
-    background:
-      linear-gradient(135deg, rgba(255,255,255,0.42), rgba(255,255,255,0.04) 74%),
-      var(--home-poly-orange) left bottom / 360px 210px no-repeat !important;
-    clip-path: polygon(0 34%, 16% 40%, 28% 52%, 44% 58%, 58% 68%, 78% 76%, 100% 100%, 0 100%) !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: min(82vw, 660px) !important;
+    margin-left: 0 !important;
+    transform: translate(-50%, -38%) !important;
   }
-}
-
-/* ========== pure white / orange design refresh ========== */
-:root{
-  --bg: #ffffff;
-  --bg-soft: #ffffff;
-  --bg-panel: #ffffff;
-  --bg-panel-2: #fff7f1;
-  --line: rgba(34,20,10,0.1);
-  --line-accent: rgba(255,105,0,0.34);
-  --text: #1d130d;
-  --text-soft: #2b1b12;
-  --text-dim: #5a4636;
-  --accent: #ff6a00;
-  --accent-soft: #ff7a00;
-  --accent-deep: #e85a00;
-  --accent-gold: #ffb000;
-  --shadow: 0 18px 42px rgba(255,106,0,0.09);
-}
-
-body,
-body.site-page{
-  background:
-    linear-gradient(135deg, rgba(255,106,0,0.055) 0 8%, transparent 8% 100%),
-    linear-gradient(315deg, rgba(255,176,0,0.045) 0 7%, transparent 7% 100%),
-    repeating-linear-gradient(90deg, rgba(255,106,0,0.045) 0 1px, transparent 1px 96px),
-    repeating-linear-gradient(0deg, rgba(255,106,0,0.032) 0 1px, transparent 1px 96px),
-    #ffffff !important;
-  color: var(--text);
-}
-
-body.site-page .page-section,
-body.page-home .page-section.page-section-top,
-.home-family-showcase,
-.home-events-showcase,
-.pastors,
-.info{
-  background:
-    radial-gradient(circle at 8% 0%, rgba(255,122,0,0.08), transparent 24%),
-    linear-gradient(180deg, #ffffff 0%, #ffffff 62%, #fffaf6 100%) !important;
-}
-
-section::before,
-body.site-page .page-section::before{
-  background:
-    linear-gradient(90deg, transparent, rgba(255,86,0,0.52), rgba(255,176,0,0.42), transparent) !important;
-  opacity: 1 !important;
-}
-
-header,
-body.site-page header,
-body.page-home header{
-  background: rgba(255,255,255,0.96) !important;
-  border-bottom: 1px solid rgba(255,106,0,0.18) !important;
-  box-shadow: 0 12px 30px rgba(255,106,0,0.08) !important;
-}
-
-.logo-text{
-  color: var(--accent-deep) !important;
-  text-shadow: none !important;
-}
-
-.menu a{
-  color: #2b1b12 !important;
-}
-
-.menu a:hover,
-.menu a.is-current{
-  color: var(--accent-deep) !important;
-}
-
-.menu a.is-current,
-body.site-page .menu a.is-current{
-  color: #1b120a !important;
-}
-
-.section-title,
-.page-title,
-.modal-title,
-.content-card h3,
-.page-link-card h3,
-.mission-item h3,
-.info-box h3,
-.offering-card h3,
-.ministry-card h3,
-.belief-card h3,
-.event-content h3,
-.pastor-content h3{
-  color: var(--accent-deep) !important;
-  text-shadow: 0 10px 28px rgba(255,106,0,0.12) !important;
-}
-
-.section-title::before,
-.section-title::after,
-body.page-home .page-section.page-section-top .section-title::before,
-body.page-home .page-section.page-section-top .section-title::after{
-  background: linear-gradient(90deg, transparent, #ff5a00, #ffb000, transparent) !important;
-}
-
-.page-kicker,
-.page-link-kicker,
-.modal-eyebrow,
-.event-date,
-.pastor-role{
-  color: #8b6f5b !important;
-}
-
-.content-card,
-.page-link-card,
-.mission-item,
-.info-box,
-.offering-card,
-.belief-card,
-.event-card,
-.pastor-card,
-.ministry-card,
-.modal-card,
-.group-schedule-board,
-.staff-workbench,
-.staff-preview,
-.staff-history-tool,
-.history-match-card{
-  background:
-    linear-gradient(#ffffff, #ffffff) padding-box,
-    linear-gradient(135deg, rgba(255,86,0,0.8), rgba(255,176,0,0.52), rgba(255,106,0,0.12)) border-box !important;
-  border: 1px solid transparent !important;
-  box-shadow: 0 18px 44px rgba(255,106,0,0.08) !important;
-}
-
-body.site-page .content-card,
-body.site-page .page-link-card,
-body.site-page .ministry-card,
-body.site-page .event-card,
-body.site-page .offering-card,
-body.site-page .belief-card,
-body.site-page .staff-tool-disclosure,
-body.site-page .staff-history-tool,
-body.site-page .history-match-card{
-  background:
-    linear-gradient(#ffffff, #ffffff) padding-box,
-    linear-gradient(135deg, rgba(255,86,0,0.82), rgba(255,176,0,0.5), rgba(255,106,0,0.12)) border-box !important;
-  border: 1px solid transparent !important;
-  box-shadow: -8px 10px 0 rgba(255,106,0,0.1),
-    0 18px 42px rgba(255,106,0,0.08) !important;
-}
-
-.content-card:hover,
-.page-link-card:hover,
-.event-card:hover,
-.offering-card:hover,
-.belief-card:hover,
-.ministry-card:hover,
-.pastor-card:hover,
-.history-match-card:hover{
-  border-color: transparent !important;
-  box-shadow: 0 24px 54px rgba(255,106,0,0.16) !important;
-}
-
-.btn-primary,
-body.page-home .hero-btns .btn-primary{
-  background: linear-gradient(135deg, #ff4d00 0%, #ff7a00 58%, #ffb000 100%) !important;
-  border-color: #ff5a00 !important;
-  color: #ffffff !important;
-  box-shadow: 0 14px 30px rgba(255,106,0,0.24) !important;
-}
-
-.btn-outline,
-body.page-home .hero-btns .btn-outline{
-  background: #ffffff !important;
-  border-color: #ff6a00 !important;
-  color: var(--accent-deep) !important;
-  box-shadow: inset 0 0 0 1px rgba(255,176,0,0.14) !important;
-}
-
-.btn-primary:hover,
-body.page-home .hero-btns .btn-primary:hover{
-  background: linear-gradient(135deg, #e84d00 0%, #ff6a00 48%, #ff9f00 100%) !important;
-  color: #ffffff !important;
-}
-
-.btn-outline:hover,
-body.page-home .hero-btns .btn-outline:hover{
-  background: linear-gradient(135deg, rgba(255,106,0,0.08), rgba(255,176,0,0.08)) !important;
-  color: var(--accent-deep) !important;
-}
-
-.page-quote,
-.modal-intro,
-.modal-quote,
-.modal-time,
-.modal-verse,
-.history-source-note{
-  background: linear-gradient(90deg, rgba(255,106,0,0.08), rgba(255,176,0,0.04)) !important;
-  border-left-color: #ff6a00 !important;
-  color: var(--text-soft) !important;
-}
-
-.modal{
-  background: rgba(255,255,255,0.72) !important;
-}
-
-.modal-card{
-  color: var(--text) !important;
-}
-
-.modal-close{
-  background: #ffffff !important;
-  color: var(--accent-deep) !important;
-  border-color: rgba(255,106,0,0.42) !important;
-}
-
-.modal-close:hover{
-  background: rgba(255,106,0,0.08) !important;
-}
-
-body.site-page:not(.page-home) .page-hero{
-  background:
-    linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.82) 48%, rgba(255,255,255,0.58) 100%),
-    linear-gradient(25deg, rgba(255,77,0,0.18) 0 18%, transparent 18% 100%),
-    linear-gradient(112deg, transparent 0 58%, rgba(255,106,0,0.18) 58% 64%, rgba(255,176,0,0.12) 64% 100%),
-    linear-gradient(180deg, #ffffff 0%, #ffffff 100%) !important;
-}
-
-body.site-page:not(.page-home) section.page-hero::before{
-  background:
-    linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.84) 40%, rgba(255,255,255,0.7) 100%),
-    radial-gradient(circle at 8% 0%, rgba(255,86,0,0.13), transparent 30%),
-    radial-gradient(circle at 92% 10%, rgba(255,176,0,0.12), transparent 28%),
-    repeating-linear-gradient(90deg, rgba(255,106,0,0.045) 0 1px, transparent 1px 92px),
-    #ffffff !important;
-}
-
-body.site-page:not(.page-home) .page-hero::after{
-  background:
-    linear-gradient(20deg, rgba(255,77,0,0.12) 0 14%, transparent 14% 100%),
-    linear-gradient(155deg, transparent 0 64%, rgba(255,176,0,0.1) 64% 75%, transparent 75% 100%) !important;
-  opacity: 1 !important;
-}
-
-body.site-page:not(.page-home) .page-hero-copy{
-  background:
-    linear-gradient(135deg, rgba(255,106,0,0.1) 0 22px, transparent 22px),
-    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.9)) !important;
-  border: 1px solid rgba(255,106,0,0.28) !important;
-  border-left: 7px solid rgba(255,90,0,0.92) !important;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.82),
-    0 24px 58px rgba(255,106,0,0.1) !important;
-}
-
-.page-pastors .pastor-content h3{
-  color: #ffffff !important;
-  text-shadow: none !important;
-}
-
-body.site-page .ministry-card.ministry-card-featured{
-  background:
-    linear-gradient(0deg, rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
-    linear-gradient(90deg, rgba(255,106,0,0.5) 0 4px, transparent 4px calc(100% - 4px), rgba(255,106,0,0.5) calc(100% - 4px) 100%),
-    linear-gradient(0deg, rgba(255,106,0,0.42) 0 4px, transparent 4px calc(100% - 4px), rgba(255,176,0,0.48) calc(100% - 4px) 100%),
-    var(--ministry-photo-image) center center / cover no-repeat,
-    var(--ministry-base-image) center center / cover no-repeat !important;
-  border: 3px solid rgba(255,106,0,0.84) !important;
-  box-shadow: inset 0 0 0 5px rgba(255,255,255,0.72),
-    inset 0 0 0 8px rgba(255,106,0,0.16),
-    0 22px 42px rgba(255,106,0,0.13) !important;
-}
-
-body.site-page .ministry-card.ministry-card-featured h3{
-  color: #1b120a !important;
-  text-shadow: 0 1px 10px rgba(255,255,255,0.78) !important;
-}
-
-body.site-page .ministry-card.ministry-card-featured .ministry-card-hint{
-  background: rgba(255,255,255,0.82) !important;
-  color: #1b120a !important;
-  border-color: rgba(255,106,0,0.24) !important;
-}
-
-.menu a:hover,
-.menu a:focus-visible,
-body.site-page .menu a:hover,
-body.site-page .menu a:focus-visible,
-body.site-page:not(.page-home) .menu a:hover,
-body.site-page:not(.page-home) .menu a:focus-visible{
-  color: #1b120a !important;
-}
-
-.menu a.is-current,
-body.site-page .menu a.is-current,
-body.site-page:not(.page-home) .menu a.is-current{
-  color: #1b120a !important;
-}
-
-body.site-page:not(.page-home) .page-hero{
-  background:
-    linear-gradient(90deg, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.48) 48%, rgba(255,255,255,0.18) 100%),
-    var(--flame-poly-orange) left -48px bottom -52px / 64% 118% no-repeat,
-    var(--flame-poly-orange) right -92px top -30px / 48% 112% no-repeat,
-    linear-gradient(180deg, #ffffff 0%, #ffffff 100%) !important;
-}
-
-body.site-page:not(.page-home) section.page-hero::before{
-  background:
-    linear-gradient(90deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.68) 32%, rgba(255,255,255,0.36) 72%, rgba(255,255,255,0.12) 100%),
-    var(--flame-poly-orange) left -40px bottom -44px / 60% 110% no-repeat,
-    var(--flame-poly-orange) right -84px top -28px / 46% 106% no-repeat !important;
-  opacity: 1 !important;
-}
-
-body.site-page:not(.page-home) .page-hero::after{
-  background:
-    linear-gradient(22deg, rgba(255,77,0,0.28) 0 16%, transparent 16% 100%),
-    linear-gradient(150deg, transparent 0 58%, rgba(255,106,0,0.18) 58% 66%, rgba(255,176,0,0.12) 66% 100%) !important;
-  opacity: 1 !important;
-}
-
-body.site-page:not(.page-home) .page-hero-copy{
-  background:
-    linear-gradient(135deg, rgba(255,86,0,0.14) 0 28px, transparent 28px),
-    linear-gradient(180deg, rgba(255,255,255,0.97), rgba(255,255,255,0.92)) !important;
-  border-color: rgba(255,90,0,0.42) !important;
-  border-left: 10px solid #ff5a00 !important;
-  box-shadow:
-    -14px 14px 0 rgba(255,106,0,0.08),
-    inset 0 0 0 1px rgba(255,255,255,0.88),
-    0 26px 64px rgba(255,106,0,0.14) !important;
-}
-
-body.site-page:not(.page-home) .page-kicker{
-  color: #7c5f4b !important;
-}
-
-body.site-page:not(.page-home) .page-title{
-  color: #e84d00 !important;
-  text-shadow: 0 12px 28px rgba(255,106,0,0.2) !important;
-}
-
-body.site-page:not(.page-home) .page-hero{
-  background:
-    linear-gradient(90deg, rgba(255,255,255,0.66) 0%, rgba(255,255,255,0.46) 46%, rgba(255,255,255,0.18) 100%),
-    linear-gradient(24deg, rgba(255,70,0,0.22) 0 20%, transparent 20% 100%),
-    var(--flame-poly-orange) center center / 100% 100% no-repeat,
-    #fff7e8 !important;
-}
-
-body.site-page:not(.page-home) section.page-hero::before{
-  background:
-    linear-gradient(90deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.58) 34%, rgba(255,255,255,0.34) 68%, rgba(255,255,255,0.1) 100%),
-    var(--flame-poly-orange) center center / 100% 100% no-repeat !important;
-  opacity: 1 !important;
 }
 
 @media (max-width: 768px){
-  body.site-page.page-pastors .pastor-grid.pastor-grid-admin{
+  body.page-home.hero-intro-done .home-hero-copy{
+    position: absolute !important;
+    left: 24px !important;
+    top: 82px !important;
+    width: 286px !important;
+    margin-left: 0 !important;
+    transform: none !important;
+  }
+
+  body.page-home:not(.hero-intro-done) .home-hero-copy{
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: min(86vw, 286px) !important;
+    margin-left: 0 !important;
+    transform: translate(-50%, -44%) !important;
+  }
+
+  body.page-home:not(.hero-intro-done) .home-hero-copy .page-kicker,
+  body.page-home:not(.hero-intro-done) .home-hero-copy h1,
+  body.page-home:not(.hero-intro-done) .home-hero-copy .hero-subtitle,
+  body.page-home:not(.hero-intro-done) .home-hero-copy p,
+  body.page-home:not(.hero-intro-done) .hero-btns{
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  body.page-home:not(.hero-intro-done) .home-hero-copy h1{
     width: 100% !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 12px !important;
-  }
-
-  body.site-page.page-pastors .pastor-grid.pastor-grid-admin .pastor-card:last-child{
-    grid-column: 1 / -1 !important;
-    width: calc((100% - 12px) / 2) !important;
-    max-width: calc((100% - 12px) / 2) !important;
-    justify-self: center !important;
-  }
-}
-
-@media (max-width: 768px){
-  body.page-home .hero{
-    height: 462px !important;
-    min-height: 462px !important;
-  }
-
-  body.page-home .hero-content,
-  body.page-home .home-hero-layout{
-    height: 442px !important;
-    min-height: 442px !important;
-  }
-
-  body.page-home .home-hero-slider{
-    height: 442px !important;
-    min-height: 442px !important;
-  }
-
-  body.page-home .home-hero-copy{
-    transform: translateY(-16px) !important;
-  }
-}
-
-@media (max-width: 768px){
-  body.page-home .hero{
-    height: 492px !important;
-    min-height: 492px !important;
-  }
-
-  body.page-home .hero-content,
-  body.page-home .home-hero-layout{
-    height: 472px !important;
-    min-height: 472px !important;
-  }
-
-  body.page-home .home-hero-slider{
-    height: 472px !important;
-    min-height: 472px !important;
-  }
-
-  body.page-home .home-hero-copy h1{
-    font-size: clamp(2.46rem, 11vw, 3rem) !important;
-  }
-}
-
-body.page-home .page-section.page-section-top{
-  padding-top: 18px !important;
-}
-
-@media (max-width: 768px){
-  body.page-home .page-section.page-section-top{
-    padding-top: 10px !important;
-  }
-}
-
-@keyframes homeCoverPhotoReveal{
-  0%,
-  68%{
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
-}
-
-@keyframes homeCoverDiamondsFade{
-  0%,
-  68%{
-    opacity: 0.92;
-  }
-  100%{
-    opacity: 0;
-  }
-}
-
-@keyframes homeCoverCopyDesktop{
-  0%,
-  68%{
-    transform: translate(calc(50vw - 50%), 28px);
-  }
-  100%{
-    transform: translate(-56px, 28px);
-  }
-}
-
-@keyframes homeCoverCopyMobile{
-  0%,
-  68%{
-    transform: translate(calc(50vw - 50%), -16px);
-  }
-  100%{
-    transform: translateY(-16px);
-  }
-}
-
-body.page-home .home-hero-slider{
-  opacity: 0;
-  animation: homeCoverPhotoReveal 3s ease forwards !important;
-}
-
-body.page-home .hero-content::after{
-  content: "" !important;
-  display: block !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 1 !important;
-  pointer-events: none !important;
-  opacity: 0.92;
-  background:
-    linear-gradient(90deg, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.58) 48%, rgba(255,255,255,0.22) 100%),
-    var(--home-poly-orange) left top / 48% 64% no-repeat,
-    var(--home-poly-orange) right top / 54% 70% no-repeat,
-    var(--home-poly-orange) left bottom / 58% 58% no-repeat,
-    linear-gradient(180deg, #fff8ee 0%, #fffdf8 100%) !important;
-  animation: homeCoverDiamondsFade 3s ease forwards !important;
-}
-
-@media (min-width: 769px){
-  body.page-home .home-hero-copy{
-    animation: homeCoverCopyDesktop 3s ease forwards !important;
-  }
-}
-
-@media (max-width: 768px){
-  body.page-home .home-hero-copy{
-    animation: homeCoverCopyMobile 3s ease forwards !important;
-  }
-
-  body.page-home .hero-content::after{
-    background:
-      linear-gradient(90deg, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.5) 52%, rgba(255,255,255,0.18) 100%),
-      var(--home-poly-orange) left top / 58% 34% no-repeat,
-      var(--home-poly-orange) right top / 60% 42% no-repeat,
-      var(--home-poly-orange) left bottom / 78% 44% no-repeat,
-      linear-gradient(180deg, #fff8ee 0%, #fffdf8 100%) !important;
-  }
-}
-
-@keyframes homeCoverCopyDesktop{
-  0%,
-  68%{
-    left: clamp(220px, 26vw, 360px);
-  }
-  100%{
-    left: 0;
-  }
-}
-
-@keyframes homeCoverCopyMobile{
-  0%,
-  68%{
-    left: clamp(54px, 17vw, 72px);
-  }
-  100%{
-    left: 0;
-  }
-}
-
-@media (min-width: 769px){
-  body.page-home .home-hero-copy{
-    left: 0;
-    animation: homeCoverCopyDesktop 3s ease forwards !important;
-  }
-}
-
-@media (max-width: 768px){
-  body.page-home .home-hero-copy{
-    left: 0;
-    animation: homeCoverCopyMobile 3s ease forwards !important;
-  }
-
-  body.page-home .hero-content::after{
-    background:
-      linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.62) 52%, rgba(255,255,255,0.24) 100%),
-      var(--home-poly-orange) left top / 62% 36% no-repeat,
-      var(--home-poly-orange) left bottom / 82% 44% no-repeat,
-      linear-gradient(180deg, #fff8ee 0%, #fffdf8 100%) !important;
-  }
-}
-
-body.page-home{
-  --home-poly-orange-clear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 360' preserveAspectRatio='none'%3E%3Cpolygon points='0,0 118,0 72,86 0,142' fill='%23f05a12' opacity='.86'/%3E%3Cpolygon points='118,0 230,0 170,92 72,86' fill='%23ff8a1a' opacity='.72'/%3E%3Cpolygon points='230,0 346,0 284,102 170,92' fill='%23ffc25b' opacity='.5'/%3E%3Cpolygon points='0,142 72,86 148,178 0,238' fill='%23dd3e16' opacity='.68'/%3E%3Cpolygon points='72,86 170,92 148,178' fill='%23f76f17' opacity='.58'/%3E%3Cpolygon points='170,92 284,102 238,208 148,178' fill='%23ffae38' opacity='.44'/%3E%3Cpolygon points='0,238 148,178 198,360 0,360' fill='%23b9191c' opacity='.52'/%3E%3Cpolygon points='148,178 238,208 198,360' fill='%23ea5313' opacity='.5'/%3E%3Cpolygon points='238,208 520,260 520,360 198,360' fill='%23f9d978' opacity='.34'/%3E%3C/svg%3E");
-}
-
-@keyframes homeCoverCopyMobile{
-  0%,
-  68%{
-    left: clamp(104px, 27vw, 126px);
-  }
-  100%{
-    left: 0;
-  }
-}
-
-@media (max-width: 768px){
-  body.page-home .hero-content::after{
-    background:
-      linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.62) 52%, rgba(255,255,255,0.24) 100%),
-      var(--home-poly-orange-clear) left top / 62% 36% no-repeat,
-      var(--home-poly-orange-clear) left bottom / 82% 44% no-repeat,
-      linear-gradient(180deg, #fff8ee 0%, #fffdf8 100%) !important;
-  }
-}
-
-@keyframes homeCoverCopyDesktop{
-  0%,
-  68%{
-    left: clamp(300px, 33vw, 470px);
-  }
-  100%{
-    left: 0;
-  }
-}
-
-@keyframes homeCoverCopyMobile{
-  0%,
-  68%{
-    left: clamp(88px, 23vw, 106px);
-  }
-  100%{
-    left: 0;
-  }
-}
-
-@keyframes homeCoverTextAlignMobile{
-  0%,
-  66%{
-    text-align: center;
-  }
-  67%,
-  100%{
-    text-align: left;
-  }
-}
-
-@keyframes homeCoverTitleAlignMobile{
-  0%,
-  66%{
-    justify-content: center;
-  }
-  67%,
-  100%{
-    justify-content: flex-start;
-  }
-}
-
-@keyframes homeCoverButtonsAlignMobile{
-  0%,
-  66%{
-    justify-content: center;
-  }
-  67%,
-  100%{
-    justify-content: flex-start;
-  }
-}
-
-@media (max-width: 768px){
-  body.page-home .home-hero-copy .page-kicker,
-  body.page-home .home-hero-copy .hero-subtitle,
-  body.page-home .home-hero-copy p{
-    animation: homeCoverTextAlignMobile 3s linear forwards !important;
-  }
-
-  body.page-home .home-hero-copy h1{
-    animation: homeCoverTitleAlignMobile 3s linear forwards !important;
-  }
-
-  body.page-home .hero-btns{
-    animation: homeCoverButtonsAlignMobile 3s linear forwards !important;
-  }
-}
-
-@media (max-width: 768px){
-  body.page-home.home-cover-intro .home-hero-copy{
-    text-align: center !important;
-  }
-
-  body.page-home.home-cover-intro .home-hero-copy .page-kicker,
-  body.page-home.home-cover-intro .home-hero-copy .hero-subtitle,
-  body.page-home.home-cover-intro .home-hero-copy p{
-    margin-left: auto !important;
-    margin-right: auto !important;
-    text-align: center !important;
-  }
-
-  body.page-home.home-cover-intro .home-hero-copy h1{
     justify-content: center !important;
-    text-align: center !important;
   }
 
-  body.page-home.home-cover-intro .hero-btns{
+  body.page-home:not(.hero-intro-done) .hero-btns{
     justify-content: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-}
-
-@keyframes homeCoverCopyMobile{
-  0%,
-  68%{
-    left: clamp(66px, 17vw, 82px);
-  }
-  100%{
-    left: 0;
-  }
-}
-
-@media (max-width: 768px){
-  body.page-home.home-cover-intro .home-hero-copy{
-    transform: translateY(-16px) !important;
-  }
-}
-
-.modal-verse.is-hidden,
-.modal-verse:empty{
-  display: none !important;
-}
-
-body.page-home .home-hero-slider{
-  animation: homeCoverPhotoReveal 1.45s ease forwards !important;
-}
-
-body.page-home .hero-content::after{
-  animation: homeCoverDiamondsFade 1.45s ease forwards !important;
-}
-
-@media (min-width: 769px){
-  body.page-home .home-hero-copy{
-    animation: homeCoverCopyDesktop 1.45s ease forwards !important;
-  }
-}
-
-@media (max-width: 768px){
-  body.page-home .home-hero-copy{
-    animation: homeCoverCopyMobile 1.45s ease forwards !important;
-  }
-
-  body.page-home .home-hero-copy .page-kicker,
-  body.page-home .home-hero-copy .hero-subtitle,
-  body.page-home .home-hero-copy p{
-    animation: homeCoverTextAlignMobile 1.45s linear forwards !important;
-  }
-
-  body.page-home .home-hero-copy h1{
-    animation: homeCoverTitleAlignMobile 1.45s linear forwards !important;
-  }
-
-  body.page-home .hero-btns{
-    animation: homeCoverButtonsAlignMobile 1.45s linear forwards !important;
-  }
-}
-
-@keyframes homeCoverCopyDesktop{
-  0%,
-  50%{
-    left: clamp(300px, 33vw, 470px);
-  }
-  100%{
-    left: 0;
-  }
-}
-
-@media (min-width: 769px){
-  body.page-home .home-hero-copy{
-    animation: homeCoverCopyDesktop 2.2s ease forwards !important;
   }
 }

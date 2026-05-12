@@ -7,13 +7,6 @@ const currentPage = decodeURIComponent(window.location.pathname.split("/").pop()
 const allModals = document.querySelectorAll(".modal");
 let menuCloseTimer = null;
 
-if (document.body.classList.contains("page-home")) {
-  document.body.classList.add("home-cover-intro");
-  window.setTimeout(() => {
-    document.body.classList.remove("home-cover-intro");
-  }, 1000);
-}
-
 const updateCurrentMenuLink = () => {
   document.querySelectorAll(".menu a").forEach((link) => {
     link.classList.remove("is-current");
@@ -138,7 +131,8 @@ const renderEventLists = () => {
 
 renderEventLists();
 
-// Homepage slideshow: desktop uses home-slide, mobile uses home-mobile; three seconds each.
+// Homepage slideshow: desktop uses home-slide, mobile uses home-mobile; five seconds each.
+const homeHeroIntroDelay = 1000;
 const homeHeroSlider = document.querySelector(".home-hero-slider");
 const isMobileHero = window.matchMedia("(max-width: 768px)").matches;
 const homeHeroSlides = homeHeroSlider
@@ -156,10 +150,14 @@ if (homeHeroSlides.length) {
 
   showHomeHeroSlide(activeHomeHeroSlide);
 
-  window.setInterval(() => {
-    activeHomeHeroSlide = (activeHomeHeroSlide + 1) % homeHeroSlides.length;
-    showHomeHeroSlide(activeHomeHeroSlide);
-  }, 3000);
+  window.setTimeout(() => {
+    document.body.classList.add("hero-intro-done");
+
+    window.setInterval(() => {
+      activeHomeHeroSlide = (activeHomeHeroSlide + 1) % homeHeroSlides.length;
+      showHomeHeroSlide(activeHomeHeroSlide);
+    }, 5000);
+  }, homeHeroIntroDelay);
 }
 
 window.addEventListener("scroll", () => {
@@ -205,14 +203,7 @@ if (allModals.length || modalTriggers.length || modalCloseButtons.length) {
     ministryModalEyebrow.textContent = trigger.dataset.ministryEyebrow || "MINISTRY";
     ministryModalTitle.textContent = trigger.dataset.ministryTitle || "事工介紹";
     ministryModalDescription.textContent = trigger.dataset.ministryDescription || "";
-
-    if (trigger.dataset.ministryVerse) {
-      ministryModalVerse.textContent = `經文：${trigger.dataset.ministryVerse}`;
-      ministryModalVerse.classList.remove("is-hidden");
-    } else {
-      ministryModalVerse.textContent = "";
-      ministryModalVerse.classList.add("is-hidden");
-    }
+    ministryModalVerse.textContent = `經文：${trigger.dataset.ministryVerse || ""}`;
 
     if (trigger.dataset.ministryTime) {
       ministryModalTime.textContent = trigger.dataset.ministryTime;
@@ -236,9 +227,6 @@ if (allModals.length || modalTriggers.length || modalCloseButtons.length) {
     lastModalTrigger = trigger;
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
-    modal.style.opacity = "1";
-    modal.style.visibility = "visible";
-    modal.style.pointerEvents = "auto";
     document.body.classList.add("modal-open");
   };
 
@@ -246,9 +234,6 @@ if (allModals.length || modalTriggers.length || modalCloseButtons.length) {
     if (!modal) return;
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
-    modal.style.opacity = "";
-    modal.style.visibility = "";
-    modal.style.pointerEvents = "";
     document.body.classList.remove("modal-open");
     if (modal.id && window.location.hash === `#${modal.id}`) {
       window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
