@@ -6668,13 +6668,13 @@ body.page-home .page-section.page-section-top .section-title::after{
 
 .home-showcase-layout{
   display: grid;
-  grid-template-columns: minmax(250px, 0.72fr) minmax(0, 2.28fr);
+  grid-template-columns: minmax(360px, 0.95fr) minmax(0, 2.05fr);
   gap: clamp(28px, 4.5vw, 72px);
   align-items: center;
 }
 
 .home-showcase-copy{
-  max-width: 360px;
+  max-width: 560px;
 }
 
 .home-showcase-kicker{
@@ -6691,6 +6691,7 @@ body.page-home .page-section.page-section-top .section-title::after{
   color: #df5a12;
   font-size: clamp(1.72rem, 2.7vw, 2.5rem);
   line-height: 1.18;
+  white-space: nowrap;
 }
 
 .home-showcase-copy p{
@@ -7013,6 +7014,7 @@ body.page-home .page-section.page-section-top .section-title::after{
 
   .home-showcase-copy h2{
     font-size: 1.56rem;
+    white-space: normal;
   }
 
   .home-showcase-copy p{
@@ -7026,7 +7028,9 @@ body.page-home .page-section.page-section-top .section-title::after{
     gap: 14px;
     width: 100vw;
     margin-left: calc(50% - 50vw);
-    padding: 0 16px 10px;
+    padding: 0 28px 10px;
+    scroll-padding-left: 28px;
+    scroll-padding-right: 28px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
