@@ -14,6 +14,40 @@ if (document.body.classList.contains("page-home")) {
   }, 1000);
 }
 
+const ministryGrid = document.querySelector(".page-ministries .ministry-grid");
+
+if (ministryGrid) {
+  const ministryCards = Array.from(ministryGrid.querySelectorAll(".ministry-card-featured"));
+
+  const revealMinistries = () => {
+    ministryGrid.classList.add("is-visible");
+    ministryCards.forEach((card, index) => {
+      window.setTimeout(() => {
+        card.classList.add("is-entering");
+      }, index * 180);
+    });
+  };
+
+  if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    ministryGrid.classList.add("is-animatable");
+    const ministryObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        revealMinistries();
+        observer.unobserve(entry.target);
+      });
+    }, {
+      root: null,
+      rootMargin: "0px 0px -45% 0px",
+      threshold: 0.01
+    });
+
+    ministryObserver.observe(ministryGrid);
+  } else {
+    revealMinistries();
+  }
+}
+
 const updateCurrentMenuLink = () => {
   document.querySelectorAll(".menu a").forEach((link) => {
     link.classList.remove("is-current");
