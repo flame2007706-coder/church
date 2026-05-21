@@ -8258,7 +8258,7 @@ body.site-page.page-ministries .ministry-grid{
 body.site-page.page-ministries .ministry-card.ministry-card-featured{
   display: block;
   min-height: 136px;
-  padding: 38px 154px 38px 168px;
+  padding: 34px 154px 34px 168px;
   border: 1px solid rgba(255,106,0,0.24) !important;
   border-left: 7px solid #ff6a00 !important;
   border-radius: 8px;
@@ -8312,16 +8312,27 @@ body.site-page.page-ministries .ministry-card.ministry-card-featured:hover{
 
 body.site-page.page-ministries .ministry-card.ministry-card-featured h3{
   display: block;
-  margin: 0;
+  margin: 0 0 7px;
   color: #2d1d12 !important;
   font-size: clamp(1.95rem, 2.28vw, 2.42rem);
   letter-spacing: 0.04em;
-  line-height: 1.22;
+  line-height: 1.12;
   text-shadow: none !important;
 }
 
 body.site-page.page-ministries .ministry-card.ministry-card-featured h3::after{
   content: none;
+}
+
+body.site-page.page-ministries .ministry-card.ministry-card-featured .ministry-card-en{
+  margin: 0;
+  color: rgba(121,82,57,0.78) !important;
+  font-size: clamp(0.82rem, 0.96vw, 0.98rem);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 body.site-page.page-ministries .ministry-card.ministry-card-featured .ministry-card-hint{
@@ -8345,10 +8356,8 @@ body.site-page.page-ministries .ministry-card.ministry-card-featured .ministry-c
   font-weight: 900;
   letter-spacing: 0.04em;
   line-height: 1;
-  text-align: center;
   white-space: nowrap;
   box-shadow: 0 8px 16px rgba(255,106,0,0.14) !important;
-  transform: none;
   transition: background 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
   clip-path: polygon(13px 0, 100% 0, 100% 100%, 0 100%);
   z-index: 1;
@@ -8417,7 +8426,7 @@ body.site-page.page-ministries .ministry-grid.is-visible .ministry-card.ministry
 
   body.site-page.page-ministries .ministry-card.ministry-card-featured{
     min-height: 92px;
-    padding: 22px 102px 22px 112px;
+    padding: 20px 102px 20px 112px;
     border-left-width: 5px !important;
     background:
       linear-gradient(135deg, rgba(255,106,0,0.14) 0 48px, transparent 48px),
@@ -8426,9 +8435,14 @@ body.site-page.page-ministries .ministry-grid.is-visible .ministry-card.ministry
   }
 
   body.site-page.page-ministries .ministry-card.ministry-card-featured h3{
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     font-size: clamp(1.32rem, 5.6vw, 1.62rem);
-    line-height: 1.18;
+    line-height: 1.12;
+  }
+
+  body.site-page.page-ministries .ministry-card.ministry-card-featured .ministry-card-en{
+    font-size: clamp(0.62rem, 2.7vw, 0.72rem);
+    letter-spacing: 0.1em;
   }
 
   body.site-page.page-ministries .ministry-card.ministry-card-featured::before{
