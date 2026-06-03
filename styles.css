@@ -2205,8 +2205,10 @@ body.site-page:not(.page-home) .page-hero-copy::after{
   }
 
   body.page-home .page-link-icon-sale{
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 26h40v28H12z'/%3E%3Cpath d='M8 18h48v12H8zM32 18v36M20 18c-5-8 3-14 12 0M44 18c5-8-3-14-12 0'/%3E%3C/g%3E%3C/svg%3E") !important;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 26h40v28H12z'/%3E%3Cpath d='M8 18h48v12H8zM32 18v36M20 18c-5-8 3-14 12 0M44 18c5-8-3-14-12 0'/%3E%3C/g%3E%3C/svg%3E") !important;
+    background: transparent center / contain no-repeat !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23f06412' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 26h40v28H12z'/%3E%3Cpath d='M8 18h48v12H8zM32 18v36M20 18c-5-8 3-14 12 0M44 18c5-8-3-14-12 0'/%3E%3C/g%3E%3C/svg%3E") !important;
   }
 
   body.page-home .page-link-icon-media{
@@ -6968,8 +6970,10 @@ body.page-home .page-section.page-section-top .section-title::after{
   }
 
   body.page-home .page-link-icon-sale{
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 26h40v28H12z'/%3E%3Cpath d='M8 18h48v12H8zM32 18v36M20 18c-5-8 3-14 12 0M44 18c5-8-3-14-12 0'/%3E%3C/g%3E%3C/svg%3E") !important;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 26h40v28H12z'/%3E%3Cpath d='M8 18h48v12H8zM32 18v36M20 18c-5-8 3-14 12 0M44 18c5-8-3-14-12 0'/%3E%3C/g%3E%3C/svg%3E") !important;
+    background: transparent center / contain no-repeat !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23f06412' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 26h40v28H12z'/%3E%3Cpath d='M8 18h48v12H8zM32 18v36M20 18c-5-8 3-14 12 0M44 18c5-8-3-14-12 0'/%3E%3C/g%3E%3C/svg%3E") !important;
   }
 
   body.page-home .page-link-icon-media{
