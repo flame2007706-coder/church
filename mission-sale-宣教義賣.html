@@ -7,7 +7,7 @@
   <meta name="description" content="腓立比火焰基督教會義賣，查看咖啡、蔬菜、甜點、代購商品與宣教紀念 T-shirt 資訊。">
   <link rel="icon" type="image/png" sizes="96x96" href="flamechruch_logo.png">
   <link rel="apple-touch-icon" sizes="180x180" href="flamechruch_logo.png">
-  <link rel="stylesheet" href="styles.css?v=20260603-sale-cache-1">
+  <link rel="stylesheet" href="styles.css?v=20260603-sale-cache-4">
   <script>
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
@@ -768,13 +768,8 @@
             <span class="sale-poster-caption"><strong>宣教咖啡包</strong><span>查看商品</span></span>
           </button>
 
-          <button class="sale-poster-card sale-hidden-future" type="button" data-open-modal="sale-modal-vegetables">
-            <span class="sale-poster-image"><img src="photo-宣教義賣/2.jpg" alt="櫛瓜義賣宣傳圖"></span>
-            <span class="sale-poster-caption"><strong>蔬菜義賣</strong><span>查看商品</span></span>
-          </button>
-
           <button class="sale-poster-card" type="button" data-open-modal="sale-modal-dessert">
-            <span class="sale-poster-image"><img src="photo-宣教義賣/3.jpg" alt="甜點義賣宣傳圖"></span>
+            <span class="sale-poster-image"><img src="photo-宣教義賣/poster-dessert-brownie.png" alt="甜點義賣宣傳圖"></span>
             <span class="sale-poster-caption"><strong>福音甜點</strong><span>查看商品</span></span>
           </button>
 
@@ -786,10 +781,14 @@
             <span class="sale-poster-caption"><strong>澎湖代購商品</strong><span>查看商品</span></span>
           </button>
 
+          <button class="sale-poster-card" type="button" data-open-modal="sale-modal-gospel-items">
+            <span class="sale-poster-image"><img src="photo-宣教義賣/poster-gospel-card-badge.png" alt="經文卡與火焰徽章宣傳圖"></span>
+            <span class="sale-poster-caption"><strong>經文卡與火焰徽章</strong><span>查看商品</span></span>
+          </button>
+
           <button class="sale-poster-card sale-hidden-future" type="button" data-open-modal="sale-modal-shirt">
             <span class="sale-poster-image sale-poster-slideshow slides-2">
-              <img src="photo-宣教義賣/6.jpg" alt="橘色宣教紀念 T-shirt 宣傳圖">
-              <img src="photo-宣教義賣/7.jpg" alt="藍色宣教紀念 T-shirt 宣傳圖">
+              <!-- Future T-shirt poster images: photo-宣教義賣/6.jpg, photo-宣教義賣/7.jpg -->
             </span>
             <span class="sale-poster-caption"><strong>宣教紀念 T-shirt</strong><span>查看商品</span></span>
           </button>
@@ -864,42 +863,17 @@
     </div>
   </div>
 
-  <div class="modal sale-modal" id="sale-modal-vegetables" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sale-modal-vegetables-title">
-    <div class="sale-modal-dialog" role="document">
-      <div class="sale-modal-head">
-        <div>
-          <p class="sale-modal-eyebrow">蔬菜義賣</p>
-          <h2 class="sale-modal-title" id="sale-modal-vegetables-title">蔬菜義賣</h2>
-        </div>
-        <button class="sale-modal-close" type="button" aria-label="關閉商品詳細" data-close-modal>&times;</button>
-      </div>
-      <div class="sale-modal-body">
-        <div class="sale-modal-poster"><img src="photo-宣教義賣/2.jpg" alt="櫛瓜義賣宣傳圖"></div>
-        <div class="sale-product-list">
-          <article class="sale-modal-product">
-            <div class="sale-product-photo"><img src="photo-宣教義賣/product-zucchini.jpg" alt="櫛瓜商品照片"></div>
-            <div>
-              <h3>櫛瓜</h3>
-              <p>新鮮櫛瓜，適合清炒、烤蔬菜或搭配主餐料理。</p>
-              <span class="sale-modal-price">3 條 100 元</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="modal sale-modal" id="sale-modal-dessert" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sale-modal-dessert-title">
     <div class="sale-modal-dialog" role="document">
       <div class="sale-modal-head">
         <div>
           <p class="sale-modal-eyebrow">福音甜點</p>
-          <h2 class="sale-modal-title" id="sale-modal-dessert-title">巴斯克蛋糕與瑪德蓮</h2>
+          <h2 class="sale-modal-title" id="sale-modal-dessert-title">巴斯克蛋糕、瑪德蓮與布朗尼</h2>
         </div>
         <button class="sale-modal-close" type="button" aria-label="關閉商品詳細" data-close-modal>&times;</button>
       </div>
       <div class="sale-modal-body">
-        <div class="sale-modal-poster"><img src="photo-宣教義賣/3.jpg" alt="甜點義賣宣傳圖"></div>
+        <div class="sale-modal-poster"><img src="photo-宣教義賣/poster-dessert-brownie.png" alt="甜點義賣宣傳圖"></div>
         <div class="sale-product-list">
           <article class="sale-modal-product">
             <div class="sale-product-photo"><img src="photo-宣教義賣/product-basque-real.avif" alt="巴斯克蛋糕商品照片"></div>
@@ -914,7 +888,48 @@
             <div>
               <h3>瑪德蓮蛋糕</h3>
               <p>外層微酥、內裡鬆軟濕潤，帶著奶油香氣，一口剛剛好，配咖啡或茶都很適合。</p>
-              <span class="sale-modal-price">一個 35 元｜六個特價 200 元</span>
+              <span class="sale-modal-price">三個特價 100 元</span>
+            </div>
+          </article>
+          <article class="sale-modal-product">
+            <div class="sale-product-photo"><img src="photo-宣教義賣/product-brownie.avif" alt="可可布朗尼商品照片"></div>
+            <div>
+              <h3>可可布朗尼</h3>
+              <p>濃郁巧克力香氣，甜度剛好，適合下午茶或作為小禮物。</p>
+              <span class="sale-modal-price">一個特價 50 元</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal sale-modal" id="sale-modal-gospel-items" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sale-modal-gospel-items-title">
+    <div class="sale-modal-dialog" role="document">
+      <div class="sale-modal-head">
+        <div>
+          <p class="sale-modal-eyebrow">菲宣義賣</p>
+          <h2 class="sale-modal-title" id="sale-modal-gospel-items-title">經文卡與火焰徽章</h2>
+        </div>
+        <button class="sale-modal-close" type="button" aria-label="關閉商品詳細" data-close-modal>&times;</button>
+      </div>
+      <div class="sale-modal-body">
+        <div class="sale-modal-poster"><img src="photo-宣教義賣/poster-gospel-card-badge.png" alt="經文卡與火焰徽章宣傳圖"></div>
+        <div class="sale-product-list">
+          <article class="sale-modal-product">
+            <div class="sale-product-photo"><img src="photo-宣教義賣/scripture-card-welcome.png" alt="義賣經文卡商品照片"></div>
+            <div>
+              <h3>義賣經文卡</h3>
+              <p>溫暖插畫風格經文卡，適合收藏、送禮或放在生活空間提醒自己。</p>
+              <span class="sale-modal-price">20 張 150 元</span>
+            </div>
+          </article>
+          <article class="sale-modal-product">
+            <div class="sale-product-photo"><img src="photo-宣教義賣/more-products/flame-badge.png" alt="火焰徽章商品照片"></div>
+            <div>
+              <h3>火焰徽章</h3>
+              <p>可愛火焰造型徽章，可別在包包、衣服或小物上。</p>
+              <span class="sale-modal-price">1 個 50 元</span>
             </div>
           </article>
         </div>
@@ -1009,22 +1024,6 @@
       </div>
       <div class="sale-modal-body">
         <div class="sale-product-list">
-          <article class="sale-modal-product">
-            <div class="sale-product-photo"><img src="photo-宣教義賣/more-products/scripture-card.png" alt="文創經文卡商品照片"></div>
-            <div>
-              <h3>文創經文卡</h3>
-              <p>溫暖插畫風格經文卡，適合收藏、送禮或放在生活空間提醒自己。</p>
-              <span class="sale-modal-price">20 張 150 元</span>
-            </div>
-          </article>
-          <article class="sale-modal-product">
-            <div class="sale-product-photo"><img src="photo-宣教義賣/more-products/flame-badge.png" alt="火焰徽章商品照片"></div>
-            <div>
-              <h3>火焰徽章</h3>
-              <p>可愛火焰造型徽章，可別在包包、衣服或小物上。</p>
-              <span class="sale-modal-price">1 個 50 元</span>
-            </div>
-          </article>
           <article class="sale-modal-product">
             <div class="sale-product-photo"><img src="photo-宣教義賣/more-products/13.png" alt="拼圖商品照片"></div>
             <div>
@@ -1190,8 +1189,7 @@
       </div>
       <div class="sale-modal-body">
         <div class="sale-modal-poster sale-poster-slideshow slides-2">
-          <img src="photo-宣教義賣/6.jpg" alt="橘色宣教紀念 T-shirt 宣傳圖">
-          <img src="photo-宣教義賣/7.jpg" alt="藍色宣教紀念 T-shirt 宣傳圖">
+          <!-- Future T-shirt poster images: photo-宣教義賣/6.jpg, photo-宣教義賣/7.jpg -->
         </div>
         <div class="sale-product-list">
           <article class="sale-modal-product">
