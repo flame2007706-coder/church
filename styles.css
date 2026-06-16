@@ -8569,7 +8569,7 @@ body.page-home .page-link-icon-sale{
 
   body.page-home .page-link-grid{
     display: grid !important;
-    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
     gap: 10px !important;
     width: 100% !important;
     margin: 0 auto !important;
