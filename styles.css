@@ -3151,10 +3151,11 @@ body.modal-open{
 
 .event-card img{
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
   display: block;
-  background: #1c1c22;
+  background: #fff;
 }
 
 .event-content{
@@ -4005,6 +4006,10 @@ body.site-page .ministry-card.ministry-card-featured{
 .pastor-card:hover img{
   transform: scale(1.035);
   filter: saturate(1.08) contrast(1.04);
+}
+
+.event-card:hover img{
+  transform: none;
 }
 
 .staff-input:focus,
